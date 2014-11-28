@@ -1,5 +1,3 @@
-% CAN ERHAN - DENEME COMMIT !
-
 %  article.tex (Version 1.00, released 1 October 2013)
 %  LaTeX source file to demonstrate formatting for manuscripts 
 %  to be submitted to SPIE journals
@@ -19,12 +17,12 @@
 %  \linkable and \video
 %  The bibliography style file is called spiejour.bst 
 %  This article.tex file needs the following image files:
-%  mcr3b.eps
-%  fig2.eps
-%  satellite.eps
+%  figures/mcr3b.eps
+%  figures/fig2.eps
+%  figures/satellite.eps
 
-\documentclass[12pt]{spie}  %>>> 12pt font mandatory; use this for US letter paper 
-%%\documentclass[a4paper,10pt]{spieman}  %>>> use this instead for A4 paper
+%%\documentclass[12pt]{spieman}  %>>> 12pt font mandatory; use this for US letter paper 
+\documentclass[a4paper,10pt]{spieman}  %>>> use this instead for A4 paper
 %%\documentclass[nocompress,12pt]{spieman}  %>>> to avoid compression of citations
 %% \addtolength{\voffset}{9mm}   %>>> moves text field down
 %  The following command loads a graphics package to include images 
@@ -226,7 +224,7 @@ Figures, along with their captions, should be separated from the main text by  0
    \begin{figure}
    \begin{center}
    \begin{tabular}{c}
-   \includegraphics[height=5.5cm]{mcr3b.eps}
+   \includegraphics[height=5.5cm]{figures/mcr3b.eps}
    \end{tabular}
    \end{center}
    \caption 
@@ -241,7 +239,7 @@ Authors may wish to create figures consisting of two or more images, in which ca
    \begin{figure}
    \begin{center}
    \begin{tabular}{c}
-   \includegraphics[height=5.5cm]{fig2.eps}  % fig2 includes two images 
+   \includegraphics[height=5.5cm]{figures/fig2.eps}  % fig2 includes two images 
      \\
      (a) \hspace{5.1cm} (b)
    \end{tabular}
@@ -262,7 +260,7 @@ Please refer to the multimedia guidelines at \linkable{http://spie.org/x85020.xm
 %-------------
    \begin{video}
    \begin{center}
-   {\includegraphics[height=5cm]{satellite.eps}}
+   {\includegraphics[height=5cm]{figures/satellite.eps}}
    \\
    \end{center}
    \caption{\label{vid:satellite} Example of a multimedia still image (MPEG, 2.5 MB).}
