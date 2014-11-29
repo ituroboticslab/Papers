@@ -1,10 +1,5 @@
 %  article.tex (Version 3.3, released 19 January 2008)
 %  Article to demonstrate format for SPIE Proceedings
-%  Special instructions are included in this file after the
-%  symbol %>>>>
-%  Numerous commands are commented out, but included to show how
-%  to effect various options, e.g., to print page numbers, etc.
-%  This LaTeX source file is composed for LaTeX2e.
 
 %  The following commands have been added in the SPIE class 
 %  file (spie.cls) and will not be understood in other classes:
@@ -12,61 +7,205 @@
 %  The bibliography style file is called spiebib.bst, 
 %  which replaces the standard style unstr.bst.  
 
-\documentclass[]{spie}  %>>> use for US letter paper
+%----------------------------------------------------------------------------------------------------
+% PACKAGES
+%----------------------------------------------------------------------------------------------------
+
+\documentclass[]{spie}  % use for US letter paper
+\usepackage{comment}
 %%\documentclass[a4paper]{spie}  %>>> use this instead for A4 paper
 %%\documentclass[nocompress]{spie}  %>>> to avoid compression of citations
 %% \addtolength{\voffset}{9mm}   %>>> moves text field down
 %% \renewcommand{\baselinestretch}{1.65}   %>>> 1.65 for double spacing, 1.25 for 1.5 spacing 
-%  The following command loads a graphics package to include images 
-%  in the document. It may be necessary to specify a DVI driver option,
-%  e.g., [dvips], but that may be inappropriate for some LaTeX 
-%  installations. 
 \usepackage[]{graphicx}
+\usepackage{epsfig}		% TeX will automatically convert eps --> pdf in pdflatex	
+\usepackage{epstopdf}
+\usepackage{caption}
+\usepackage{subcaption}
 
-\title{Style template and guidelines for SPIE Proceedings} 
+%----------------------------------------------------------------------------------------------------
+% TITLE
+%----------------------------------------------------------------------------------------------------
 
-%>>>> The author is responsible for formatting the 
-%  author list and their institutions.  Use  \skiplinehalf 
-%  to separate author list from addresses and between each address.
-%  The correspondence between each author and his/her address
-%  can be indicated with a superscript in italics, 
-%  which is easily obtained with \supit{}.
+\title{An Online Visual Loop Closure Detection Method for Indoor Robotic Navigation} 
 
-\author{Anna A. Author1\supit{a} and Barry B. Author2\supit{b}
+%----------------------------------------------------------------------------------------------------
+% AUTHORS
+%----------------------------------------------------------------------------------------------------
+
+\author{
+Can Erhan\supit{a}, 
+Evangelos Sariyanidi\supit{b}, 
+Onur Sencan\supit{c}, 
+Hakan Temeltas\supit{c}
 \skiplinehalf
-\supit{a}Affiliation1, Address, City, Country; \\
-\supit{b}Affiliation2, Address, City, Country
+\supit{a}Istanbul Technical University Mechatronics Engineering Department, Maslak 34469, Istanbul, Turkey; 
+\supit{b}Queen Mary University of London School of Electronic Engineering and Computer Science, ADDRESS, London, England; 
+\supit{c}Istanbul Technical University Control and Automation Engineering Department, Maslak 34469, Istanbul, Turkey
 }
 
-%>>>> Further information about the authors, other than their 
-%  institution and addresses, should be included as a footnote, 
-%  which is facilitated by the \authorinfo{} command.
-
-\authorinfo{Further author information: (Send correspondence to A.A.A.)\\A.A.A.: E-mail: aaa@tbk2.edu, Telephone: 1 505 123 1234\\  B.B.A.: E-mail: bba@cmp.com, Telephone: +33 (0)1 98 76 54 32}
-%%>>>> when using amstex, you need to use @@ instead of @
+\authorinfo{Further author information: \\
+Can Erhan: E-mail: erhanc@itu.edu.tr \\  
+Evangelos Sariyanidi: E-mail: e.sariyanidi@eecs.qmul.ac.uk \\
+Onur Sencan: E-mail: osencan@itu.edu.tr \\  
+Hakan Temeltas: E-mail: hakan.temeltas@itu.edu.tr}
+% when using amstex, you need to use @@ instead of @
  
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%>>>> uncomment following for page numbers
+% uncomment following for page numbers
 % \pagestyle{plain}    
-%>>>> uncomment following to start page numbering at 301 
-%\setcounter{page}{301} 
+% uncomment following to start page numbering at 301 
+% \setcounter{page}{301} 
  
-  \begin{document} 
-  \maketitle 
+ %----------------------------------------------------------------------------------------------------
+% ABSTRACT
+%----------------------------------------------------------------------------------------------------
+ 
+ \begin{document} 
+\maketitle 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{abstract}
-This document shows the desired format and appearance of a manuscript prepared for the Proceedings of the SPIE.  It contains general formatting instructions and hints about how to use LaTeX.  The LaTeX source file that produced this document, {\tt article.tex} (Version 3.3), provides a template, used in conjunction with {\tt spie.cls} (Version 3.3).  
+Visual loop closure detection problem is an active area especially for the indoor environments, where the global position information is missing and the localization information is highly dependent on odometry sensors. In this paper, we propose an enhanced loop closure method based on unsupervised visual landmark extraction with saliency detection technique. In contradistinction to the previous methods, our approach uses additional depth information. Saliency regions are used to refer to the certain distinctive areas on the image patches. They are also suitable to represent locations in a sparse manner.  In order to find out the similarity between two locations we use a straightforward function, that contains the detection confidences of the image and the landmark coordinates in 3D. Recognition of the previously visited and unvisited locations is also considered in the framework. Exemplary results and the practical implementation of the method are also given with the data gathered on the testbed with a depth camera (Kinect) mounted differential drive autonomous ground vehicle. Specifically, we adopt visual place recognition to close loops that is useful for the process of correctly identifying a previously visited location. 
 \end{abstract}
 
-%>>>> Include a list of keywords after the abstract 
+\keywords{Loop closure, depth map, zernike moments,  computer vision}
 
-\keywords{Manuscript format, template, SPIE Proceedings, LaTeX}
+%----------------------------------------------------------------------------------------------------
+% INTRODUCTION
+%----------------------------------------------------------------------------------------------------
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{INTRODUCTION}
-\label{sec:intro}  % \label{} allows reference to this section
+\label{sec:intro} 
+
+In mobile robotics, autonomous navigation is an active research area especially for the indoor environments, where the global position information is missing and the localization information is highly dependent on odometry sensors. One of the major problems connected to robotic navigation is Simultaneous localization and mapping (SLAM) which still remains as an assertive problem in a lot of ways. Loop closing is defined as the correct identification of previously visited location in terms of SLAM. Information that is gathered from various data sources including LIDARs, RADARs, stereo       and monocular cameras is highly utilized in loop closure detection. With the recent development of visual sensor technologies, the loop closure detection becomes a problem that is open for research in the field of computer vision.
+
+In this paper, we present an enhanced loop closure method based on image-to-image matching in indoor environments with the additional depth information. Specifically, we adopt visual place recognition without using any metrical information such as rotation and exact location to correctly identify the previously visited location. This technique is quite simple to provide low computational complexity and performs in real-time with high loop closing accuracy. 
+
+The technique we implement relies on discrete Complex Zernike Moments (CZMs) in 2-dimensional space. They are extracted using a set of complex polynomials which form a complete orthogonal radial basis functions defined on the unit disc. These moments are used to represent shape information inside the image within the context of image processing. In this study, the use of CZMs are examined in predefined non-overlapping patches of the image. The complex moments
+
+
+%----------------------------------------------------------------------------------------------------
+% METHODOLOGY
+%----------------------------------------------------------------------------------------------------
+
+\section{METHODOLOGY}
+\label{sec:method}
+
+Methodology will be written here.
+
+%----------------------------------------------------------------------------------------------------
+% EXPERIMENTS
+%----------------------------------------------------------------------------------------------------
+
+\section{EXPERIMENTS}
+\label{sec:exper}
+
+Experiments will be written here.
+
+Location offset: 100 frames
+
+
+% DISTANCE MATRICES
+\begin{figure}[!htb]
+        \centering
+        
+        %%% BRIGHT DISTANCE MATRIX
+        \begin{subfigure}[b]{0.27\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_bright.png}    
+        \caption{Bright distances}
+        \label{subfig:dist_bright}
+        \end{subfigure}
+        ~ 
+        %%% DIM DISTANCE MATRIX
+        \begin{subfigure}[b]{0.27\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_dim.png}    
+        \caption{Dim distances}
+        \label{subfig:dist_dim}
+        \end{subfigure}
+         ~ 
+        %%% DARK DISTANCE MATRIX
+        \begin{subfigure}[b]{0.27\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_dark.png}    
+        \caption{Dark distances}
+        \label{subfig:dist_dark}
+        \end{subfigure}
+        
+        \hspace{-3mm}
+        \caption{Distance matrixes}
+        \label{fig:dist_matrices}
+\end{figure}
+
+%%% DATASET EXAMPLES
+\begin{figure}[!htb]
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, height=7cm]{figures/dataset_examples.png}
+        \caption{Dataset examples: (right) bright, (middle) dim, (left) dark}
+        \label{fig:dataset}
+\end{figure}
+
+%%% BRIGHT PR CURVE
+\begin{figure}[!htb]
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, height=8cm]{figures/pr_bright.eps}    
+        \caption{Bright dataset results}
+        \label{fig:pr_bright}
+\end{figure}
+
+%%% DIM PR CURVE
+\begin{figure}[!htb]
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, height=8cm]{figures/pr_dim.eps}    
+        \caption{Dim dataset results}
+        \label{fig:pr_dim}
+\end{figure}
+
+%%% DARK PR CURVE
+\begin{figure}[!htb]
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, height=8cm]{figures/pr_dark.eps}      
+        \caption{Dark dataset results}
+        \label{fig:pr_dark}
+\end{figure}
+
+
+%----------------------------------------------------------------------------------------------------
+% ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------------------
+
+\acknowledgments         
+ 
+Acknowledgements will be written here.
+
+%----------------------------------------------------------------------------------------------------
+% REFERENCES
+%----------------------------------------------------------------------------------------------------
+
+\bibliography{report}   %>>>> bibliography data in report.bib
+\bibliographystyle{spiebib}   %>>>> makes bibtex use spiebib.bst
+
+\end{document} 
+
+
+
+
+
+
+
+
+%----------------------------------------------------------------------------------------------------
+% % % % % % % % % % % % % % % % % % % % % % % % COMMENTED 
+%----------------------------------------------------------------------------------------------------
+
+\begin{comment}
 
 This document shows the desired format and appearance of a manuscript prepared for the Proceedings of the SPIE.\footnote{The basic format was developed in 1995 by Rick Herman (SPIE) and Ken Hanson (Los Alamos National Lab.).} It is prepared using LaTeX2e\cite{Lamport94} with the class file {\tt spie.cls}.  The LaTeX source file used to create this document is {\tt article.tex}, which contains important formatting information embedded in it.  These files are available on the Internet at {\tt http://home.lanl.gov/kmh/spie/}.  The font used throughout is the LaTeX default font, Computer Modern Roman, which is equivalent to the Times Roman font available on many systems.  If this font is not available, use a similar serif font.  Normal text has a font size of 10 points\footnote{Font sizes are specified in points, abbreviated pt., which is a unit of length.  One inch = 72.27 pt.; one cm = 28.4 pt.} for which the actual height of a capital E is about 2.4 mm (7 pt.) and the line-to-line spacing is about 4.2 mm (12 pt.).  The font attributes for other parts of the manuscript, summarized in Table~\ref{tab:fonts}, are described in the following sections.  Normal text should be justified to both the left and right margins.  Appendix~\ref{sec:latex} has information about PostScript fonts.
 
@@ -120,32 +259,6 @@ At times it may be desired, for formatting reasons, to break a line without star
 %%%%%for example, in article titles.
 
 %%-----------------------------------------------------------
-\subsection{Title and Author Information} 
-\label{sec:title}
-
-The article title appears centered at the top of the first page.  The title font is 16 point, bold.  The rules for capitalizing the title are the same as for sentences; only the first word, proper nouns, and acronyms should be capitalized.  Avoid using acronyms in the title.  Keep in mind that people outside your area of expertise might read your article.  Appendix~\ref{sec:misc} contains more about acronyms.
-
-The list of authors immediately follows the title after a blank vertical space of about 7 mm.  The font is 12 point, normal with each line centered.  The authors' affiliations and addresses follow the author list after another blank space of about 4 mm, also in 12-point, normal font and centered.  Do not use acronyms in affiliations and addresses. For multiple affiliations, each affiliation should appear on a new line, separated from the following address by a semicolon.  Italicized superscripts may be used to identify the correspondence between the authors and their respective affiliations.  Further author information, such as e-mail address, complete postal address, and web-site location, may be provided in a footnote by using \verb|\authorinfo{}|, as demonstrated above.
-
-When the abbreviated title or author information is too long to fit on one line, multiple lines may be used; insert line breaks appropriately to achieve a visually pleasing format.  The proper spacing of one and one-half lines between the title, author list, and their affiliations is achieved with the command \verb|\skiplinehalf| defined in {\tt spie.cls}.
-
-%%-----------------------------------------------------------
-\subsection{Abstract and Keywords} 
-The title and author information is immediately followed by the Abstract. The Abstract should concisely summarize the key findings of the paper.  It should consist of a single paragraph containing no more than 200 words.  The Abstract does not have a section number.  A list of up to ten keywords should immediately follow the Abstract after a blank line.  These keywords will be included in a searchable database at SPIE.
-
-%%-----------------------------------------------------------
-\subsection{Body of Paper} 
-The body of the paper consists of numbered sections that present the main findings.  These sections should be organized to best present the material.  See Sec.~\ref{sec:sections} for formatting instructions.
-
-%%-----------------------------------------------------------
-\subsection{Appendices} 
-Auxiliary material that is best left out of the main body of the paper, for example, derivations of equations, proofs of theorems, and details of algorithms, may be included in appendices.  Appendices are enumerated with uppercase Latin letters in alphabetic order, and appear just before the Acknowledgments and References.
-
-%%-----------------------------------------------------------
-\subsection{Acknowledgments} 
-In the Acknowledgments section, appearing just before the References, the authors may credit others for their guidance or help.  Also, funding sources may be stated.  The Acknowledgments section does not have a section number.
-
-%%-----------------------------------------------------------
 \subsection{References} 
 The References section lists books, articles, and reports that are cited in the paper.  It does not have a section number.  The references are numbered in the order in which they are cited.  Examples of the format to be followed are given at the end of this document.  
 
@@ -194,7 +307,7 @@ Tables are handled identically to figures, except that their captions appear abo
    \begin{figure}
    \begin{center}
    \begin{tabular}{c}
-   \includegraphics[height=7cm]{mcr3b.eps}
+   \includegraphics[height=7cm]{figures/mcr3b.eps}
    \end{tabular}
    \end{center}
    \caption[example] 
@@ -282,15 +395,5 @@ The general rule for overriding LaTeX's and BibTex's reinterpretation of your in
 \verb+ pages  = "355-357",+ \\	
 \verb+ year   = "1937"	} + \\[1ex]
 This example shows the use of both umlauts and uppercase letters.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\acknowledgments     %>>>> equivalent to \section*{ACKNOWLEDGMENTS}       
- 
-This unnumbered section is used to identify those who have aided the authors in understanding or accomplishing the work presented and to acknowledge sources of funding.  
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% References %%%%%
-
-\bibliography{report}   %>>>> bibliography data in report.bib
-\bibliographystyle{spiebib}   %>>>> makes bibtex use spiebib.bst
-
-\end{document} 
+\end{comment}
