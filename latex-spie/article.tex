@@ -15,8 +15,6 @@
 \usepackage{comment}
 %%\documentclass[a4paper]{spie}  %>>> use this instead for A4 paper
 %%\documentclass[nocompress]{spie}  %>>> to avoid compression of citations
-%% \addtolength{\voffset}{9mm}   %>>> moves text field down
-%% \renewcommand{\baselinestretch}{1.65}   %>>> 1.65 for double spacing, 1.25 for 1.5 spacing 
 \usepackage[]{graphicx}
 \usepackage{epsfig}		% TeX will automatically convert eps --> pdf in pdflatex	
 \usepackage{epstopdf}
@@ -33,6 +31,8 @@
 \usepackage{mathtools}
 
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+%\renewcommand{\baselinestretch}{1.65}   %>>> 1.65 for double spacing, 1.25 for 1.5 spacing 
+%\addtolength{\voffset}{9mm}   %>>> moves text field down
 
 %----------------------------------------------------------------------------------------------------
 % TITLE
@@ -51,7 +51,7 @@ Onur Sencan\supit{c},
 Hakan Temeltas\supit{c}
 \skiplinehalf
 \supit{a}Istanbul Technical University Mechatronics Engineering Department, Maslak 34469, Istanbul, Turkey; 
-\supit{b}Queen Mary University of London School of Electronic Engineering and Computer Science, ADDRESS, London, England; 
+\supit{b}Centre of Intelligent Sensing, Mile End Road, E1 4NS, London, U.K.;
 \supit{c}Istanbul Technical University Control and Automation Engineering Department, Maslak 34469, Istanbul, Turkey
 }
 
@@ -166,7 +166,7 @@ Consider that the input image $\mathbf{I}_{p\times q}$ is a combination of subim
  \end{bmatrix}
  \label{eq:divided_mat}
 \end{equation}
-where $P=\floor*{^p/_k}$ and $Q=\floor*{^q/_k}$. An exemplar input image partitioned into subimages is shown in Figure \ref{fig:divided_image}. The $Z_{nm}$ of the input image can be considered as the transformation of the subimages in (\ref{eq:divided_mat}) individually. This transform is applied to subimages with all $n$ and $m$ values according to its order. Lastly, the transformed subimages contains a set of complex coefficients are collected into a new matrix such as:
+where $P=\floor*{^p/_k}$ and $Q=\floor*{^q/_k}$. An exemplar input image partitioned into subimages is shown in Figure \ref{fig:divided_image}. The $Z_{nm}$ of the input image can be considered as the transformation of the subimages in (\ref{eq:divided_mat}) individually. This transform is applied to subimages with all $n$ and $m$ values according to its order. Lastly, the ZMs computed from transformed subimages are collected into a new matrix as follows:
 
 \begin{equation}
 \mathbf{Z} ( \mathbf{I}_{p\times q} )= 
@@ -178,7 +178,8 @@ where $P=\floor*{^p/_k}$ and $Q=\floor*{^q/_k}$. An exemplar input image partiti
 \mathbf{Z}(I_{P1}) \\
   \vdots \\
 \mathbf{Z}(I_{PQ}) \\
- \end{bmatrix} = 
+ \end{bmatrix}
+ \longrightarrow
  \begin{bmatrix}
 Z_{00}(I_{11}) & \hdots & Z_{nm}(I_{11}) \\
   \vdots  & & \vdots \\
@@ -285,17 +286,15 @@ image and depth is created by concatenated with image and depth ZM feature vecto
 
 In order to measure loop closing performance of the algorithm in different illumination levels, three different datasets are created in indoor environment by using Kinect sensor which can grab both RGB and depth images at the same time. The lighting conditions in the datasets are sequentially bright, dim and dark in which both depth and RGB images are captured. The exemplary images belong to different datasets are shown in Figure \ref{fig:dataset}. In some cases, the line of sight of the Kinect is not enough to capture the depth information for $10m$ above distances, thus some of the depth images are decomposed.
 
-Images are collected via Kinect mounted moving platform and approximately pointed in the direction of the displacement with average speed $0.25m/s$. Also, the rectangle-shaped trajectory of the three datasets is nearly the same as the others to compare their performances. There are two loops that contains 1000 frames per loop for each dataset, one for discovering, the other for evaluating.
-
-
-manually annotated, each frame is considered as a different location, similar frame sensitivity is approx 10 frame.
+The images in the datasets are acquired via Kinect mounted moving platform and pointed in the direction of the displacement with average speed $0.25$ m/s. Also, the rectangle-shaped trajectory of the three datasets is nearly the same as the others to compare their performances correctly. There are two loops that contains 1000 frames per loop in each dataset, one is used for discovering and the other one for evaluating. To create the ground truth, the locations which corresponds to approximately 10 sequential frames is annotated manually. 
 
 %%% DATASET EXAMPLES
 \begin{figure}[!htb]
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, height=7cm]{figures/dataset_examples.png}
-        \caption{Dataset examples: (right) bright, (middle) dim, (left) dark}
+        \vspace{2mm}
+        \caption{Examplary images belong to benchmark datasets in different lighting conditions which are bright (left), dim (middle) and dark (right).}
         \label{fig:dataset}
 \end{figure}
 
