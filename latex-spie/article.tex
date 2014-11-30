@@ -96,7 +96,7 @@ The technique we implement relies on discrete Complex Zernike Moments (CZMs) in 
 
 The locations are represented with the histograms of their images. Detecting loop closing events can be considered as a machine learning problem which number of classes expands continuously when a new unseen location comes. We utilized Nearest Neighbour (NN) algorithm to classify locations by which the distance metric is the regular $L_1$ aka. Manhattan distance that is one of the simplest distance metric available. In other words, the image which distance between the input image is minimum closes the loop, if the distance is lower than the predefined threshold value. 
 
-In the next sections, a brief introduction about the methodology is explained first. After that, the experiments and datasets are shown, and finally results are presented. 
+In the following sections, a brief introduction about the methodology is explained first, and then the experiments and datasets are shown, and finally results are presented. 
 
 %----------------------------------------------------------------------------------------------------
 % METHODOLOGY
@@ -280,17 +280,43 @@ image and depth is created by concatenated with image and depth ZM feature vecto
 
 \subsection{Benchmark Datasets}
 
-In order to measure loop closing performance of the algorithm in different illumination levels, three different datasets are created in indoor environment by using Kinect sensor which can grab both RGB and depth images at the same time. The lighting conditions in the datasets are sequentially bright, dim and dark in which both depth and RGB images are captured. The exemplary images belong to different datasets are shown in Figure \ref{fig:dataset}. In some cases, the line of sight of the Kinect is not enough to capture the depth information for $10m$ above distances, thus some of the depth images are decomposed.
+In order to measure loop closing performance of the algorithm in different illumination levels, three different datasets are created in an indoor environment by using Kinect sensor which can grab both RGB and depth images at the same time. The lighting conditions in the datasets are bright, dim and dark in which both depth and RGB images are captured. The exemplary images belonging to different datasets are shown in Figure \ref{fig:dataset}. In some cases, the line of sight of the Kinect is not enough to capture the depth information for distances above $10m$. Thus, some of the depth images are unreliable.
 
-The images in the datasets are acquired via Kinect mounted moving platform and pointed in the direction of the displacement with average speed $0.25$ m/s. Also, the rectangle-shaped trajectory of the three datasets is nearly the same as the others to compare their performances correctly. There are two loops that contains 1000 frames per loop in each dataset, one is used for discovering and the other one for evaluating. To create the ground truth, the locations which corresponds to approximately 10 sequential frames is annotated manually. 
+The images in the datasets are acquired via Kinect mounted moving platform and pointed in the direction of the displacement with approximate speed 0.25m/s. Also, the rectangle-shaped trajectory of the three datasets is almost the same as the others to compare their performances correctly. There are two loops that contain around 1000 frames per loop in each dataset, first one is used for discovering and the second for evaluating. To create the ground truth, the locations which corresponds to approximately 10 sequential frames are annotated manually. 
 
-%%% DATASET EXAMPLES
+% DISTANCE MATRICES
 \begin{figure}[!htb]
         \centering
+        
+        %%% BRIGHT DISTANCE MATRIX
+        \begin{subfigure}[b]{0.27\textwidth}
+        \centering
          % trim parameters by order: left, bottom, right, top
-        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, height=7cm]{figures/dataset_examples.png}
-        \vspace{2mm}
-        \caption{Examplary images belong to benchmark datasets in different lighting conditions which are bright (left), dim (middle) and dark (right).}
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dataset_bright.png}    
+        \caption{Bright}
+        \label{subfig:dataset_bright}
+        \end{subfigure}
+        ~ 
+        %%% DIM DISTANCE MATRIX
+        \begin{subfigure}[b]{0.27\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dataset_dim.png}    
+        \caption{Dim}
+        \label{subfig:dataset_dim}
+        \end{subfigure}
+         ~ 
+        %%% DARK DISTANCE MATRIX
+        \begin{subfigure}[b]{0.27\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dataset_dark.png}    
+        \caption{Dark}
+        \label{subfig:dataset_dark}
+        \end{subfigure}
+        
+        \hspace{-5mm}
+        \caption{Examplary images belonging to benchmark datasets in different lighting conditions.}
         \label{fig:dataset}
 \end{figure}
 
