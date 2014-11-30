@@ -259,12 +259,24 @@ Finally, the input image $I_{p\times q}$ is described with a histogram of length
 
 \section{EXPERIMENTS}
 
-The method implemented in this paper has been evaluated on three datasets which lighting is different from one another. 
+The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from one another. 
+
+
 
 \subsection{Benchmark Datasets}
 
-
-
+manually annotated
+Moving platform,
+indoor
+Kinect (grayscale and depth images) 
+Kinect: max line of sight is 10m
+Average speed is approx 0.5 m/s 
+bright, dim, dark (to evaluate depth info)
+bright 2082, dim 2083, dark 2251
+approx 1000 frames per loop
+2 loops, each dataset approx 2000 frames
+1 loop for loop closure testing
+examples shown in \ref{fig:dataset}
 
 %%% DATASET EXAMPLES
 \begin{figure}[!htb]
@@ -274,9 +286,6 @@ The method implemented in this paper has been evaluated on three datasets which 
         \caption{Dataset examples: (right) bright, (middle) dim, (left) dark}
         \label{fig:dataset}
 \end{figure}
-
- 
-\subsection{Experimental Setup}
 
 %----------------------------------------------------------------------------------------------------
 % RESULTS
