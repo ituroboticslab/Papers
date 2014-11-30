@@ -86,7 +86,7 @@ Visual loop closure detection problem is an active area especially for the indoo
 
 \section{INTRODUCTION}
 
-In mobile robotics, autonomous navigation is an active research area especially for the indoor environments, where the global position information is missing and the localization information is highly dependent on odometry sensors. One of the major problems connected to robotic navigation is Simultaneous localization and mapping (SLAM) which still remains as an assertive problem in a lot of ways. Loop closing is defined as the correct identification of previously visited location in terms of SLAM. Information that is gathered from various data sources including LIDARs, RADARs, stereo       and monocular cameras is highly utilized in loop closure detection. With the recent development of visual sensor technologies, the loop closure detection becomes a problem that is open for research in the field of computer vision.
+In mobile robotics, autonomous navigation is an active research area especially for the indoor environments, where the global position information is missing and the localization information is highly dependent on odometry sensors. One of the major problems connected to robotic navigation is Simultaneous localization and mapping (SLAM) which still remains as an assertive problem in a lot of ways. Loop closing is defined as the correct identification of previously visited location in terms of SLAM. Information that is gathered from various data sources including LIDARs, RADARs, stereo       and monocular cameras is highly utilized in loop closure detection. With the recent development of visual sensor technologies, the loop closure detection became a problem that is open for research in the field of computer vision.
 
 In this paper, we present an enhanced loop closure method based on image-to-image matching with the additional depth information in indoor environments. Specifically, we adopt visual place recognition without using any metrical information such as rotation and exact location to correctly identify the previously visited location. This technique is quite simple because of its low computational complexity, and performs in real-time with high loop closing accuracy. 
 
@@ -108,9 +108,9 @@ The Bag of Words\cite{1238663} method has also been widely used to visual place 
 
 \section{METHODOLOGY}
 
-As it has been mentioned earlier, the presented loop closing approach relies on the calculating Zernike Moments of partitioned image blocks across the input image in a local manner. 
+As it was mentioned earlier, the presented loop closing approach relies on calculating the Zernike Moments of partitioned image blocks across the input image in a local manner. 
 
-The whole image representation is constructed as follows. Firstly, the ZMs of each subimages that are obtained by partitioning the input image is calculated. After that, the calculated complex moments are roughly quantized by keeping only the sign of the real and imaginary components and ignoring the rest of the information. Finally, the quantized binary data is coded with histograms that are concatenated to form the final feature vector.
+The whole image representation is constructed as follows. Firstly, the ZMs of each subimage that were obtained by partitioning the input image is calculated. After that, the calculated complex moments are coarsely quantized by keeping only the sign of the real and imaginary components and ignoring the rest of the information. Finally, the quantized binary data is coded as histograms that are concatenated to form the final feature vector.
 
 %%% PARTITIONED IMAGE
 \begin{figure}[!htb]
@@ -144,7 +144,7 @@ K(n) =
 \label{eq:num_moms}
 \end{equation}
 
-In order to extract ZMs in local manner, the input image is divided by $k\times k$-sized subimages in which $k$ is a predefined parameter. If the image is not divided by $k$ perfectly, the rest of the part is simply ignored. The set of images obtained from partitioning are flatten into a  $k^2\times 1$-sized single column by row for more straightforward representation.
+In order to extract ZMs in local manner, the input image is divided by $k\times k$-sized subimages in which $k$ is a predefined partitioning parameter. If the image is not divided by $k$ perfectly, the rest of the part is simply ignored. The set of images obtained from partitioning are flatten into a  $k^2\times 1$-sized single column in row-major order for more straightforward representation.
 
 Consider that the input image $\mathbf{I}_{p\times q}$ is a combination of subimages $I_{ij}$:
 
@@ -166,7 +166,7 @@ Consider that the input image $\mathbf{I}_{p\times q}$ is a combination of subim
  \end{bmatrix}
  \label{eq:divided_mat}
 \end{equation}
-where $P=\floor*{^p/_k}$ and $Q=\floor*{^q/_k}$. An exemplar input image partitioned into subimages is shown in Figure \ref{fig:divided_image}. The $Z_{nm}$ of the input image can be considered as the transformation of the subimages in (\ref{eq:divided_mat}) individually. This transform is applied to subimages with all $n$ and $m$ values according to its order. Last, the transformed subimages contains a set of complex coefficients are collected into a new matrix such as:
+where $P=\floor*{^p/_k}$ and $Q=\floor*{^q/_k}$. An exemplar input image partitioned into subimages is shown in Figure \ref{fig:divided_image}. The $Z_{nm}$ of the input image can be considered as the transformation of the subimages in (\ref{eq:divided_mat}) individually. This transform is applied to subimages with all $n$ and $m$ values according to its order. Lastly, the transformed subimages contains a set of complex coefficients are collected into a new matrix such as:
 
 \begin{equation}
 \mathbf{Z} ( \mathbf{I}_{p\times q} )= 
@@ -200,7 +200,7 @@ a_{00}^{PQ} + \mathbf{i}b_{00}^{PQ} & \hdots & a_{nm}^{PQ} + \mathbf{i}b_{nm}^{P
  \label{eq:lzm_op}
 \end{equation}
 
-Therefore, $k^2\times K(n)$-sized complex coefficient matrix is obtained. In order to represent the data more robust and reduce the size of the descriptor vector, a rough quantization takes place at this step. First, the complex numbers are decoupled as real and imaginary components, then the sign of each matrix element is taken to binarize the decoupled $k^2\times 2K(n)$-sized matrix as follows:
+Therefore, $k^2\times K(n)$-sized complex coefficient matrix is obtained. In order to facilitate the representation of the data and to reduce the size of the descriptor vector, a coarse quantization takes place at this step. First, the complex numbers are decoupled as real and imaginary components, then the sign of each matrix element is taken to binarize the decoupled $k^2\times 2K(n)$-sized matrix as follows:
 
 \begin{equation}
 \mathbf{Z} ( \mathbf{I}_{p\times q} )
@@ -226,25 +226,38 @@ sgn(a_{00}^{PQ}) & sgn(b_{00}^{PQ}) & \hdots & sgn(a_{nm}^{PQ}) & sgn(b_{nm}^{PQ
  \end{bmatrix}
  \label{eq:lzm_binary}
 \end{equation}
-where $sgn(\bullet)$ which is the signum function. According to (\ref{eq:global_zernike}), $Z_{nm}$ with $m = 0$ is omitted since their imaginary components turn out to be constantly equal to zero. 
+where $sgn(\bullet)$ is the signum function. According to (\ref{eq:global_zernike}), $Z_{nm}$ with $m = 0$ is omitted since their imaginary components turn out to be constantly equal to zero. 
 
 The next step is representing the binary matrix shown in (\ref{eq:lzm_binary}) with histograms. Using the binary values for the overall image representation is not a practical solution. Describing binary data with histograms are more common solution to obtain the image representation. As the methodology described so far, $k^2\times 2K(n)$-sized binary matrix is extracted. Each row of this matrix is linearly combined by weighting each of them as a power of $2$. Hence the final feature vector $\mathbf{X}$ is obtained as follows:
 
 \begin{equation}
 \mathbf{X} = 
   \begin{bmatrix}
-2^0sgn(a_{00}^{11}) & 2^1sgn(b_{00}^{11}) & \hdots & 2^{2 K(n)-2}sgn(a_{nm}^{11}) & 2^{2 K(n)-1}sgn(b_{nm}^{11}) \\
+sgn(a_{00}^{11}) & sgn(b_{00}^{11}) & \hdots & sgn(a_{nm}^{11}) & sgn(b_{nm}^{11}) \\
   \vdots  & \vdots & & \vdots  & \vdots\\
-2^0sgn(a_{00}^{1Q}) & 2^1sgn(b_{00}^{1Q}) & \hdots & 2^{2 K(n)-2}sgn(a_{nm}^{1Q}) & 2^{2 K(n)-1}sgn(b_{nm}^{1Q}) \\
+sgn(a_{00}^{1Q}) & sgn(b_{00}^{1Q}) & \hdots & sgn(a_{nm}^{1Q}) & sgn(b_{nm}^{1Q}) \\
   \vdots  & \vdots & & \vdots  & \vdots\\
-2^0sgn(a_{00}^{P1}) & 2^1sgn(b_{00}^{P1}) & \hdots & 2^{2 K(n)-2}sgn(a_{nm}^{P1}) & 2^{2 K(n)-1}sgn(b_{nm}^{P1}) \\
+sgn(a_{00}^{P1}) & sgn(b_{00}^{P1}) & \hdots & sgn(a_{nm}^{P1}) & sgn(b_{nm}^{P1}) \\
   \vdots  & \vdots & & \vdots  & \vdots\\
-2^0sgn(a_{00}^{PQ}) &2^1sgn(b_{00}^{PQ}) & \hdots & 2^{2 K(n)-2}sgn(a_{nm}^{PQ}) & 2^{2 K(n)-1}sgn(b_{nm}^{PQ}) \\
+sgn(a_{00}^{PQ}) &sgn(b_{00}^{PQ}) & \hdots & sgn(a_{nm}^{PQ}) & sgn(b_{nm}^{PQ}) \\
+ \end{bmatrix}
+ \begin{bmatrix}
+2^0 \\
+2^1 \\
+ \vdots \\
+  \vdots \\
+   \vdots \\
+ 2^{2 K(n)-2} \\
+ 2^{2 K(n)-1}
  \end{bmatrix}=
  \begin{bmatrix}
- x_{1} \\
+ x_{11} \\
  \vdots \\
- x_{k^2}
+ x_{1Q} \\
+  \vdots \\
+ x_{P1} \\
+  \vdots \\
+ x_{PQ} \\
  \end{bmatrix}
  \label{eq:lzm_coded}
 \end{equation}
@@ -259,24 +272,23 @@ Finally, the input image $I_{p\times q}$ is described with a histogram of length
 
 \section{EXPERIMENTS}
 
-The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from one another. 
+The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from each other. 
 
+tested with k = 5, n = 2 ZM parameters
+k x k is the number of regions the input image is divided
+n: the order of ZM
+tested in three different datasets by using image only, depth only and both image and depth.
+image and depth is created by concatenated with image and depth ZM feature vectors
 
 
 \subsection{Benchmark Datasets}
 
+In order to measure loop closing performance of the algorithm in different illumination levels, three different datasets are created in indoor environment by using Kinect sensor which can grab both RGB and depth images at the same time. The lighting conditions in the datasets are sequentially bright, dim and dark in which both depth and RGB images are captured. The exemplary images belong to different datasets are shown in Figure \ref{fig:dataset}. In some cases, the line of sight of the Kinect is not enough to capture the depth information for $10m$ above distances, thus some of the depth images are decomposed.
+
+Images are collected via Kinect mounted moving platform and approximately pointed in the direction of the displacement with average speed $0.25m/s$. Also, the rectangle-shaped trajectory of the three datasets is nearly the same as the others to compare their performances. There are two loops that contains 1000 frames per loop for each dataset, one for discovering, the other for evaluating.
+
+
 manually annotated, each frame is considered as a different location, similar frame sensitivity is approx 10 frame.
-Moving platform,
-indoor
-Kinect (grayscale and depth images) 
-Kinect: max line of sight is 10m
-Average speed is approx 0.5 m/s 
-bright, dim, dark (to evaluate depth info)
-bright 2082, dim 2083, dark 2251
-approx 1000 frames per loop
-2 loops, each dataset approx 2000 frames
-1 loop for loop closure testing
-examples shown in \ref{fig:dataset}
 
 %%% DATASET EXAMPLES
 \begin{figure}[!htb]
