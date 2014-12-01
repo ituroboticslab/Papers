@@ -76,7 +76,7 @@ Hakan Temeltas: E-mail: hakan.temeltas@itu.edu.tr}
 \maketitle 
 
 \begin{abstract}
-In this paper, we present an enhanced loop closure method based on image-to-image matching  relies on quantized local Zernike moments. In contradistinction to the previous methods, our approach uses additional depth information to extract Zernike moments in local manner. These moments are used to represent holistic shape information inside the image. The moments in complex space that are extracted from both grayscale and depth images are coarsely quantized. In order to find out the similarity between two locations, nearest neighbour (NN) classification algorithm is performed. Exemplary results and the practical implementation case of the method are also given with the data gathered on the testbed using a Kinect. The method is evaluated in three different datasets of different lighting conditions. Additional depth information with the actual image increases the detection rate especially in dark enviroments. The results are referred as a successful, high-fidelity online method for visual place recognition as well as to close navigation loops, which is a crucial information for the well known simultaneously localization and mapping (SLAM) problem. This technique is applicable because of its low computational complexity, and performs in real-time with high loop closing accuracy.
+In this paper, we present an enhanced loop closure method based on image-to-image matching  relies on quantized local Zernike moments. In contradistinction to the previous methods, our approach uses additional depth information to extract Zernike moments in local manner. These moments are used to represent holistic shape information inside the image. The moments in complex space that are extracted from both grayscale and depth images are coarsely quantized. In order to find out the similarity between two locations, nearest neighbour (NN) classification algorithm is performed. Exemplary results and the practical implementation case of the method are also given with the data gathered on the testbed using a Kinect. The method is evaluated in three different datasets of different lighting conditions. Additional depth information with the actual image increases the detection rate especially in dark environments. The results are referred as a successful, high-fidelity online method for visual place recognition as well as to close navigation loops, which is a crucial information for the well known simultaneously localization and mapping (SLAM) problem. This technique is also practically applicable because of its low computational complexity, and performing capability in real-time with high loop closing accuracy.
 
 \end{abstract}
 
@@ -94,7 +94,7 @@ Visual loop closing techniques can be categorized into three main parts\cite{Wil
 
 In this paper, we present an enhanced loop closure method based on image-to-image matching with the additional depth information in indoor environments. Specifically, we adopt visual place recognition without using any metrical information such as rotation and exact location to correctly identify the previously visited location. This technique is quite simple because of its low computational complexity, and performs in real-time with high loop closing accuracy. 
 
-The technique we implement relies on discrete Complex Zernike Moments (CZMs) in 2-dimensional space. They are extracted using a set of complex polynomials which form a complete orthogonal radial basis functions defined on the unit disc. These moments are used to represent shape information inside the image within the context of image processing. To make the image description more robust, the ZMs of the input image is calculated in local manner. In this study, the ZMs are extracted from both the greyscale and depth images separately and concatenated sequentially to create ultimate feature vector.
+The technique we implement relies on discrete Complex Zernike Moments (CZMs) in 2-dimensional space. They are extracted using a set of complex polynomials which form a complete orthogonal radial basis functions defined on the unit disc. These moments are used to represent shape information inside the image within the context of image processing. To make the image description more robust, the CZMs of the input image is calculated in local manner. In this study, the CZMs are extracted from both the greyscale and depth images separately and concatenated sequentially to create ultimate feature vector.
 
 The locations are represented with the histograms of their images. Detecting loop closing events can be considered as a machine learning problem which number of classes expands continuously when a new unseen location comes. We utilized Nearest Neighbour (NN) algorithm to classify locations by which the distance metric is the regular $L_1$ a.k.a. Manhattan distance that is one of the simplest distance metric available. In other words, the image which distance between the input image is minimum closes the loop, if the distance is lower than the predefined threshold value. 
 
@@ -109,7 +109,7 @@ In the following sections, a brief introduction about the methodology is explain
 
 As it was mentioned earlier, the presented loop closing approach relies on calculating the Zernike Moments of partitioned image blocks across the input image in a local manner. 
 
-The whole image representation is constructed as follows. Firstly, the ZMs of each subimage that were obtained by partitioning the input image is calculated. After that, the calculated complex moments are coarsely quantized by keeping only the sign of the real and imaginary components and ignoring the rest of the information. Next, the quantized binary data is combined linearly by weighting each of them to convert them into integers. Finally, the integers values are coded as histograms.
+The whole image representation is constructed as follows. Firstly, the CZMs of each subimage that were obtained by partitioning the input image is calculated. After that, the calculated complex moments are coarsely quantized by keeping only the sign of the real and imaginary components and ignoring the rest of the information. Next, the quantized binary data is combined linearly by weighting each of them to convert them into integers. Finally, the integers values are coded as histograms.
 
 %%% PARTITIONED IMAGE
 \begin{figure}[!htb]
@@ -123,9 +123,9 @@ The whole image representation is constructed as follows. Firstly, the ZMs of ea
 
 \subsection{Extraction of Quantized Local Zernike Moments} 
 
-The Complex Zernike Moments (ZM) of an image are used to represent the image on the 2-dimensional complex subspace. They are extracted using a set of complex polynomials which form a complete orthogonal radial basis functions defined on the unit disc. The coefficients in this complex subspace describe the holistic shape information within the image. 
+The CZMs of an image are used to represent the image on the 2-dimensional complex subspace. They are extracted using a set of complex polynomials which form a complete orthogonal radial basis functions defined on the unit disc. The coefficients in this complex subspace describe the holistic shape information within the image. 
 
-The Complex Zernike Moments of an image $f(i,j)$ are calculated as follows:
+The CZMs of an image $f(i,j)$ are calculated as follows:
 
 \begin{equation}
 \label{eq:global_zernike}
@@ -143,7 +143,7 @@ K(n) =
 \label{eq:num_moms}
 \end{equation}
 
-In order to extract ZMs in local manner, the input image is divided by $k\times k$-sized subimages in which $k$ is a predefined partitioning parameter. If the image is not divided by $k$ perfectly, the rest of the part is simply ignored. The set of images obtained from partitioning are flatten into a  $k^2\times 1$-sized single column in row-major order for more straightforward representation.
+In order to extract CZMs in local manner, the input image is divided by $k\times k$-sized subimages in which $k$ is a predefined partitioning parameter. If the image is not divided by $k$ perfectly, the rest of the part is simply ignored. The set of images obtained from partitioning are flatten into a  $k^2\times 1$-sized single column in row-major order for more straightforward representation.
 
 Consider that the input image $\mathbf{I}_{p\times q}$ is a combination of subimages $I_{ij}$:
 
@@ -264,11 +264,11 @@ Finally, the histogram is defined that consists of $2^{2K(n)-1}$ bins, and each 
 
 \section{EXPERIMENTS}
 
-The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from each other. The tests are done with either using gray and depth images separately or using both of them. After that, the difference matrices are calculated to examine the results. Nearest Neighbour (NN) algorithm is applied to classify the new locations using the $L_{1}$ distance metric. In addition to this, the last 100 frames are not included in the classification phase, because it the sensor is always moving and these frames correspond to the area behind the sensor.
+The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from each other. The tests are done with either using gray and depth images separately or using both of them. After that, the difference matrices are calculated to examine the results. The NN algorithm is applied to classify the new locations using the $L_{1}$ distance metric. In addition to this, the last 100 frames are not included in the classification phase, because it the sensor is always moving and these frames correspond to the area behind the sensor.
 
 The method described in Section \ref{sec:method} has basically two parameters that must be adjusted. One of them is $k\times k$ which defines the number of the subimages that the input image was partitioned to, and the other one is n, which is the order of the Zernike polynomials used. During the experiments, the selected parameters are $k = 30$ and $n = 2$. Then, the quantized $k\times k$-sized matrix obtained from the input image is divided into $5\times 5$ equal-sized non-overlapping subregions. The histograms of each subregion are simply concatenated to compose the feature vector of an image. In order to construct the ultimate feature vector containing both gray and depth images, each feature vector obtained from both images are also concatenated.
 
-\subsection{Benchmark Datasets}
+\subsection{Benchmark of the Datasets}
 
 In order to measure loop closing performance of the algorithm in different illumination levels, three different datasets are created in an indoor environment by using Kinect sensor which can grab both gray and depth images at the same time. The lighting conditions in the datasets are bright, dim and dark in which both depth and gray images are captured. The exemplary images belonging to different datasets are shown in Figure \ref{fig:dataset}. In some cases, the line of sight of the Kinect is not enough to capture the depth information for distances above $10m$. Thus, some of the depth images are unreliable.
 
@@ -329,7 +329,7 @@ As it can be seen in Figure \ref{subfig:pr_bright}
 
 \subsection{Real-Time Performance}
 
-There exist limited number of techniques that operate in real-time without parallelization. The speed tests are done with a MacBook Pro 7,1 which specifications are Intel Core 2 Duo 2.4 GHz CPU. In this setting, the extraction of Quantized Local Zernike Moments of an image of size $256\times 192$ pixels takes approximately $10ms$. The NN classification is applied with simple brute-force searching in which the algorithmic complexity is $\mathcal{O}(mn)$ that depends on the number of frames to compare with. In other words, the amount of time needed to performs this search increases throughout the trajectory. Therefore, the total processing time including the brute force search is $14ms$ in average when approximately 2000 frames are processed.
+There exist limited number of techniques that operate in real-time without parallelization. The speed tests are done with a MacBook Pro 7.1 which specifications are Intel Core 2 Duo 2.4 GHz CPU. In this setting, the extraction of Quantized Local Zernike Moments of an image of size $256\times 192$ pixels takes approximately $10ms$. The NN classification is applied with simple brute-force searching in which the algorithmic complexity is $\mathcal{O}(n)$ that depends on the number of frames to compare with. In other words, the amount of time needed to performs this search increases throughout the trajectory. Therefore, the total processing time including the brute force search is $14ms$ in average when approximately 2000 frames are processed.
 
 % DISTANCE MATRICES
 \begin{figure}[!htb]
