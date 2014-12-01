@@ -317,22 +317,13 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
 \section{RESULTS}
 \label{sec:results}
 
-The results are obtained by three datasets in which the trajectory of the Kinect mounted moving platform is similar to each Dataset that is created in different lightning conditions: Bright, Dim and Dark. In the first loop, there are no loop closures to detect. To examine the performance of the method, precision vs. recall (PR) curves are calculated for each dataset. Precision is simply the fraction of retrieved instances that are relevant, while recall is the fraction of relevant instances that are retrieved. In other words, there are less false positives when the precision is high, and less false negatives when the recall is high. In loop closing problem, high precision is needed to decrease localization errors of the moving autonomous vehicle. The PR curves are illustrated in Figures \ref{subfig:pr_bright}, \ref{subfig:pr_dim}, \ref{subfig:pr_dark} in which there are compared three different image source that are only grayscale images, only depth images and both. The results show that using both grayscale and depth images gives the best performance in bright and dim datasets.
-
-
-
-
-
+The results are obtained by three datasets in which the trajectory of the Kinect mounted moving platform is similar to each Dataset that is created in different lightning conditions: Bright, Dim and Dark. In the first loop, there are no loop closures to detect. To examine the performance of the method, precision vs. recall (PR) curves are plotted for each dataset. The PR curves are illustrated in Figures \ref{subfig:pr_bright}, \ref{subfig:pr_dim}, \ref{subfig:pr_dark} in which there are compared three different image sources that are only grayscale images, only depth images and both. The results show that using both grayscale and depth images gives the best performance in bright and dim datasets. In addition to this, the similarity matrices calculated from each dataset is shown in \ref{fig:dist_matrices}. The black dots corresponds to the detected loop closures at $90\%$ precision. As it can be seen in the similarity matrices, the algorithm performs quite successful results to detect loop closure event.
 
 
 %VANGELden
 %the performance shown in Table/figure is  representative as the results are obtained with a %manually annotated ….
 %our demo video provides qualitative loop closure results which may be considered to be more representative for our method’s performance
 
-
-\subsection{Detection Performance}
-
-As it can be seen in Figure \ref{subfig:pr_bright}
 
 % DISTANCE MATRICES
 \begin{figure}
@@ -427,13 +418,17 @@ There exist limited number of techniques that operate in real-time without paral
 
 \section{CONCLUSION}
 
-In conclusion, this paper presents a novel image description technique that is used to achieve loop closure detection within a SLAM framework. The technique works quite rapidly and operates in real-time. Moreover, it results successful loop closing on different lightning conditions by using the depth information.
+In conclusion, this paper presents a novel image description technique\footnote{Readers can access the source code from the following link: \emph{https://github.com/ituroboticslab/Quantized-Local-Zernike-Moments}} that is used to achieve loop closure detection within a SLAM framework. The technique works quite rapidly and operates in real-time. Moreover, it results successful loop closing on different lightning conditions by using the depth information.
+
+
 
 %----------------------------------------------------------------------------------------------------
 % ACKNOWLEDGEMENTS
 %----------------------------------------------------------------------------------------------------
 
 \acknowledgments         
+
+Authors would like to thank for the collaboration and the equipments to ITU Robotics Laboratory and the Borda Technology for the indoor dataset retrieval.
 
 %----------------------------------------------------------------------------------------------------
 % REFERENCES
