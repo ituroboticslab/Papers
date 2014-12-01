@@ -263,13 +263,13 @@ Finally, the histogram is defined that consists of $2^{2K(n)-1}$ bins, and each 
 
 \section{EXPERIMENTS}
 
-The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from each other. The tests are done with either using gray and depth images separately or using both of them. After that, the difference matrices are calculated to examine the results. Nearest Neighbour (NN) algorithm is utilized to classify the new locations and the distance metric is $L_{1}$.
+The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from each other. The tests are done with either using gray and depth images separately or using both of them. After that, the difference matrices are calculated to examine the results. Nearest Neighbour (NN) algorithm is applied to classify the new locations using the $L_{1}$ distance metric. In addition to this, the last 100 sequential frames are not involved in classification phase, because it is assumed that the sensor is always moving and these frames correspond to the just behind of the sensor.
 
-The method described in Section \ref{sec:method} has basically two parameters that must be adjusted. One of them is $k\times k$ the size of subimages that the input image partitioned by in (\ref{eq:divided_mat}) and the other one is $n$ the order of the Zernike polynomials. During the experiments, the parameter set is selected as $k=30$ and $n=2$. Then the quantized $k\times k$-sized matrix obtained from the input image is divided into $5\times 5$ equal-sized non-overlapping subregions. The histograms of each subregion are simply concatenated to compose the feature vector of an image. In order to construct the ultimate feature vector containing both gray and depth images, each feature vectors obtained from both images are also concatenated.
+The method described in Section \ref{sec:method} has basically two parameters that must be adjusted. One of them is $k\times k$ which defines the number of the subimages that the input image was partitioned to, and the other one is n, which is the order of the Zernike polynomials used. During the experiments, the selected parameters are $k = 30$ and $n = 2$. Then, the quantized $k\times k$-sized matrix obtained from the input image is divided into $5\times 5$ equal-sized non-overlapping subregions. The histograms of each subregion are simply concatenated to compose the feature vector of an image. In order to construct the ultimate feature vector containing both gray and depth images, each feature vector obtained from both images are also concatenated.
 
 \subsection{Benchmark Datasets}
 
-In order to measure loop closing performance of the algorithm in different illumination levels, three different datasets are created in an indoor environment by using Kinect sensor which can grab both RGB and depth images at the same time. The lighting conditions in the datasets are bright, dim and dark in which both depth and RGB images are captured. The exemplary images belonging to different datasets are shown in Figure \ref{fig:dataset}. In some cases, the line of sight of the Kinect is not enough to capture the depth information for distances above $10m$. Thus, some of the depth images are unreliable.
+In order to measure loop closing performance of the algorithm in different illumination levels, three different datasets are created in an indoor environment by using Kinect sensor which can grab both gray and depth images at the same time. The lighting conditions in the datasets are bright, dim and dark in which both depth and gray images are captured. The exemplary images belonging to different datasets are shown in Figure \ref{fig:dataset}. In some cases, the line of sight of the Kinect is not enough to capture the depth information for distances above $10m$. Thus, some of the depth images are unreliable.
 
 The images in the datasets are acquired via Kinect mounted moving platform and pointed in the direction of the displacement with approximate speed 0.25m/s. Also, the rectangle-shaped trajectory of the three datasets is almost the same as the others to compare their performances correctly. There are two loops that contain around 1000 frames per loop in each dataset, first one is used for discovering and the second for evaluating. To create the ground truth, the locations which corresponds to approximately 10 sequential frames are annotated manually. 
 
@@ -316,9 +316,16 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
 \section{RESULTS}
 \label{sec:results}
 
+
+
+Ama sunu muhakkak eklemen gerek; el ile secilen bir maskeye dayanarak sonuc hesapliyorsun dolayisiyla sonuclarda hatalar olabilir. (ornek: the performance shown in Table/figure is  representative as the results are obtained with a manually annotated ….). Daha sonra da goz ile saydigin FP/FN sayilarini verirsin, ki bu sayiyi ben de merak ediyorum. En sonda da asil basarimin video uzerinden degerlendirilecegini yazarsin. (ornek: our demo video provides qualitative loop closure results which may be considered to be more representative for our method’s performance).
+
+
 \subsection{Detection Performance}
 
 \subsection{Real-Time Performance}
+
+Most of image-to-image loop closure techniques are void of computational efficient. There exist limited number of techniques that operates in real-time without parallelization. The speed tests are done with a MacBook Pro 7,1 which specifications are Intel Core 2 Duo 2.4 GHz CPU. In this setting, the extraction of Quantized Local Zernike Moments of an image of size $256\times 192$ pixels takes approximately $10ms$. The NN classification is applied with simple brute-force searching in which the algorithmic complexty is $\mathcal{O}(mn)$ that depends on the number of frames to compare with. In other words, the amount of time needed to performs this search increases throughout the trajectory. Therefore, the total processing time including the brute force search is $14ms$ in average. 
 
 % DISTANCE MATRICES
 \begin{figure}[!htb]
