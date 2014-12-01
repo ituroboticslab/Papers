@@ -95,7 +95,7 @@ In this paper, we present an enhanced loop closure method based on image-to-imag
 
 The technique we implement relies on discrete Complex Zernike Moments (CZMs) in 2-dimensional space. They are extracted using a set of complex polynomials which form a complete orthogonal radial basis functions defined on the unit disc. These moments are used to represent shape information inside the image within the context of image processing. To make the image description more robust, the ZMs of the input image is calculated in local manner. In this study, the ZMs are extracted from both the greyscale and depth images separately and concatenated sequentially to create ultimate feature vector.
 
-The locations are represented with the histograms of their images. Detecting loop closing events can be considered as a machine learning problem which number of classes expands continuously when a new unseen location comes. We utilized Nearest Neighbour (NN) algorithm to classify locations by which the distance metric is the regular $L_1$ aka. Manhattan distance that is one of the simplest distance metric available. In other words, the image which distance between the input image is minimum closes the loop, if the distance is lower than the predefined threshold value. 
+The locations are represented with the histograms of their images. Detecting loop closing events can be considered as a machine learning problem which number of classes expands continuously when a new unseen location comes. We utilized Nearest Neighbour (NN) algorithm to classify locations by which the distance metric is the regular $L_1$ a.k.a. Manhattan distance that is one of the simplest distance metric available. In other words, the image which distance between the input image is minimum closes the loop, if the distance is lower than the predefined threshold value. 
 
 In the following sections, a brief introduction about the methodology is explained first, and then the experiments and datasets are shown, and finally results are presented. 
 
@@ -104,6 +104,7 @@ In the following sections, a brief introduction about the methodology is explain
 %----------------------------------------------------------------------------------------------------
 
 \section{METHODOLOGY}
+\label{sec:method}
 
 As it was mentioned earlier, the presented loop closing approach relies on calculating the Zernike Moments of partitioned image blocks across the input image in a local manner. 
 
@@ -246,8 +247,8 @@ sgn(a_{00}^{PQ}) &sgn(b_{00}^{PQ}) & \hdots & sgn(a_{nm}^{PQ}) & sgn(b_{nm}^{PQ}
 2^0 \\
 2^1 \\
  \vdots \\
-  \vdots \\
-   \vdots \\
+ \vdots \\
+ \vdots \\
  2^{2 K(n)-2} \\
  2^{2 K(n)-1}
  \end{bmatrix}
@@ -262,14 +263,9 @@ Finally, the histogram is defined that consists of $2^{2K(n)-1}$ bins, and each 
 
 \section{EXPERIMENTS}
 
-The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from each other. 
+The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from each other. The tests are done with either using gray and depth images separately or using both of them. After that, the difference matrices are calculated to examine the results. Nearest Neighbour (NN) algorithm is utilized to classify the new locations and the distance metric is $L_{1}$.
 
-tested with k = 5, n = 2 ZM parameters
-k x k is the number of regions the input image is divided
-n: the order of ZM
-tested in three different datasets by using image only, depth only and both image and depth.
-image and depth is created by concatenated with image and depth ZM feature vectors
-
+The method described in Section \ref{sec:method} has basically two parameters that must be adjusted. One of them is $k\times k$ the size of subimages that the input image partitioned by in (\ref{eq:divided_mat}) and the other one is $n$ the order of the Zernike polynomials. During the experiments, the parameter set is selected as $k=30$ and $n=2$. Then the quantized $k\times k$-sized matrix obtained from the input image is divided into $5\times 5$ equal-sized non-overlapping subregions. The histograms of each subregion are simply concatenated to compose the feature vector of an image. In order to construct the ultimate feature vector containing both gray and depth images, each feature vectors obtained from both images are also concatenated.
 
 \subsection{Benchmark Datasets}
 
@@ -277,11 +273,11 @@ In order to measure loop closing performance of the algorithm in different illum
 
 The images in the datasets are acquired via Kinect mounted moving platform and pointed in the direction of the displacement with approximate speed 0.25m/s. Also, the rectangle-shaped trajectory of the three datasets is almost the same as the others to compare their performances correctly. There are two loops that contain around 1000 frames per loop in each dataset, first one is used for discovering and the second for evaluating. To create the ground truth, the locations which corresponds to approximately 10 sequential frames are annotated manually. 
 
-% DISTANCE MATRICES
+% BENCHMARK DATASETS
 \begin{figure}[!htb]
         \centering
         
-        %%% BRIGHT DISTANCE MATRIX
+        %%% BRIGHT 
         \begin{subfigure}[b]{0.27\textwidth}
         \centering
          % trim parameters by order: left, bottom, right, top
@@ -290,7 +286,7 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
         \label{subfig:dataset_bright}
         \end{subfigure}
         ~ 
-        %%% DIM DISTANCE MATRIX
+        %%% DIM 
         \begin{subfigure}[b]{0.27\textwidth}
         \centering
          % trim parameters by order: left, bottom, right, top
@@ -299,7 +295,7 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
         \label{subfig:dataset_dim}
         \end{subfigure}
          ~ 
-        %%% DARK DISTANCE MATRIX
+        %%% DARK
         \begin{subfigure}[b]{0.27\textwidth}
         \centering
          % trim parameters by order: left, bottom, right, top
@@ -308,7 +304,7 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
         \label{subfig:dataset_dark}
         \end{subfigure}
         
-        \hspace{-5mm}
+        \hspace{-3mm}
         \caption{Examplary images belonging to benchmark datasets in different lighting conditions.}
         \label{fig:dataset}
 \end{figure}
@@ -362,32 +358,51 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
 
 
 
-%%% BRIGHT PR CURVE
+% RESULTS
 \begin{figure}[!htb]
         \centering
+        
+        %%% BRIGHT PR CURVE
+        \begin{subfigure}[b]{0.48\textwidth}
+        \centering
          % trim parameters by order: left, bottom, right, top
-        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, height=8cm]{figures/pr_bright.eps}    
-        \caption{Bright dataset results}
-        \label{fig:pr_bright}
+        \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_bright.eps}    
+        \caption{Bright dataset results.}
+        \label{subfig:pr_bright}
+        \end{subfigure}
+        ~ 
+        %%% DIM PR CURVE
+        \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_dim.eps}    
+        \caption{Dim dataset results.}
+        \label{subfig:pr_dim}
+        \end{subfigure}
+        ~
+        %%% DARK PR CURVE
+        \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_dark.eps}    
+        \caption{Dark dataset results.}
+        \label{subfig:pr_bright}
+        \end{subfigure}
+        ~ 
+        %%% ALL PR CURVE
+        \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_all.eps}    
+        \caption{Comparison between datasets.}
+        \label{subfig:pr_dim}
+        \end{subfigure}
+
+        \hspace{-3mm}
+        \caption{PR curves}
+        \label{fig:pr_curves}
 \end{figure}
 
-%%% DIM PR CURVE
-\begin{figure}[!htb]
-        \centering
-         % trim parameters by order: left, bottom, right, top
-        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, height=8cm]{figures/pr_dim.eps}    
-        \caption{Dim dataset results}
-        \label{fig:pr_dim}
-\end{figure}
-
-%%% DARK PR CURVE
-\begin{figure}[!htb]
-        \centering
-         % trim parameters by order: left, bottom, right, top
-        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, height=8cm]{figures/pr_dark.eps}      
-        \caption{Dark dataset results}
-        \label{fig:pr_dark}
-\end{figure}
 
 
 %----------------------------------------------------------------------------------------------------
