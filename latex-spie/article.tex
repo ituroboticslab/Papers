@@ -317,9 +317,17 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
 \section{RESULTS}
 \label{sec:results}
 
+The results are obtained by three datasets in which the trajectory of the Kinect mounted moving platform is similar to each Dataset that is created in different lightning conditions: Bright, Dim and Dark. In the first loop, there are no loop closures to detect. To examine the performance of the method, precision vs. recall (PR) curves are calculated for each dataset. Precision is simply the fraction of retrieved instances that are relevant, while recall is the fraction of relevant instances that are retrieved. In other words, there are less false positives when the precision is high, and less false negatives when the recall is high. In loop closing problem, high precision is needed to decrease localization errors of the moving autonomous vehicle. The PR curves are illustrated in Figures \ref{subfig:pr_bright}, \ref{subfig:pr_dim}, \ref{subfig:pr_dark} in which there are compared three different image source that are only graysalce images, only depth images and both. The results show that using both grayscale and depth images gives the best performance in bright and dim datasets.....
 
 
-Ama sunu muhakkak eklemen gerek; el ile secilen bir maskeye dayanarak sonuc hesapliyorsun dolayisiyla sonuclarda hatalar olabilir. (ornek: the performance shown in Table/figure is  representative as the results are obtained with a manually annotated ….). Daha sonra da goz ile saydigin FP/FN sayilarini verirsin, ki bu sayiyi ben de merak ediyorum. En sonda da asil basarimin video uzerinden degerlendirilecegini yazarsin. (ornek: our demo video provides qualitative loop closure results which may be considered to be more representative for our method’s performance).
+
+
+
+
+
+%VANGELden
+%the performance shown in Table/figure is  representative as the results are obtained with a %manually annotated ….
+%our demo video provides qualitative loop closure results which may be considered to be more representative for our method’s performance
 
 
 \subsection{Detection Performance}
@@ -327,7 +335,7 @@ Ama sunu muhakkak eklemen gerek; el ile secilen bir maskeye dayanarak sonuc hesa
 As it can be seen in Figure \ref{subfig:pr_bright}
 
 
-\subsection{Real-Time Performance}
+\subsection{Online Performance}
 
 There exist limited number of techniques that operate in real-time without parallelization. The speed tests are done with a MacBook Pro 7,1 which specifications are Intel Core 2 Duo 2.4 GHz CPU. In this setting, the extraction of Quantized Local Zernike Moments of an image of size $256\times 192$ pixels takes approximately $10ms$. The NN classification is applied with simple brute-force searching in which the algorithmic complexity is $\mathcal{O}(mn)$ that depends on the number of frames to compare with. In other words, the amount of time needed to performs this search increases throughout the trajectory. Therefore, the total processing time including the brute force search is $14ms$ in average when approximately 2000 frames are processed.
 
@@ -397,7 +405,7 @@ There exist limited number of techniques that operate in real-time without paral
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_dark.eps}    
         \caption{Dark dataset results.}
-        \label{subfig:pr_bright}
+        \label{subfig:pr_dark}
         \end{subfigure}
         ~ 
         %%% ALL PR CURVE
@@ -406,7 +414,7 @@ There exist limited number of techniques that operate in real-time without paral
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_all.eps}    
         \caption{Comparison between datasets.}
-        \label{subfig:pr_dim}
+        \label{subfig:pr_all}
         \end{subfigure}
 
         \hspace{-3mm}
