@@ -117,7 +117,7 @@ The whole image representation is constructed as follows. Firstly, the ZMs of ea
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, height=3cm]{figures/divided_image.png}    
         \vspace{3mm}
-        \caption{Image partitioned into blocks by k = 3}
+        \caption{Image partitioned into $3\times 3$ blocks ($k = 3$).}
         \label{fig:divided_image}
 \end{figure}
 
@@ -306,7 +306,7 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
         \end{subfigure}
         
         \hspace{-3mm}
-        \caption{Examplary images belonging to benchmark datasets in different lighting conditions.}
+        \caption{Examplary images belonging to benchmark datasets in three different lighting conditions.}
         \label{fig:dataset}
 \end{figure}
 
@@ -317,7 +317,7 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
 \section{RESULTS}
 \label{sec:results}
 
-The results are obtained by three datasets in which the trajectory of the Kinect mounted moving platform is similar to each Dataset that is created in different lightning conditions: Bright, Dim and Dark. In the first loop, there are no loop closures to detect. To examine the performance of the method, precision vs. recall (PR) curves are calculated for each dataset. Precision is simply the fraction of retrieved instances that are relevant, while recall is the fraction of relevant instances that are retrieved. In other words, there are less false positives when the precision is high, and less false negatives when the recall is high. In loop closing problem, high precision is needed to decrease localization errors of the moving autonomous vehicle. The PR curves are illustrated in Figures \ref{subfig:pr_bright}, \ref{subfig:pr_dim}, \ref{subfig:pr_dark} in which there are compared three different image source that are only graysalce images, only depth images and both. The results show that using both grayscale and depth images gives the best performance in bright and dim datasets.....
+The results are obtained by three datasets in which the trajectory of the Kinect mounted moving platform is similar to each Dataset that is created in different lightning conditions: Bright, Dim and Dark. In the first loop, there are no loop closures to detect. To examine the performance of the method, precision vs. recall (PR) curves are calculated for each dataset. Precision is simply the fraction of retrieved instances that are relevant, while recall is the fraction of relevant instances that are retrieved. In other words, there are less false positives when the precision is high, and less false negatives when the recall is high. In loop closing problem, high precision is needed to decrease localization errors of the moving autonomous vehicle. The PR curves are illustrated in Figures \ref{subfig:pr_bright}, \ref{subfig:pr_dim}, \ref{subfig:pr_dark} in which there are compared three different image source that are only grayscale images, only depth images and both. The results show that using both grayscale and depth images gives the best performance in bright and dim datasets.
 
 
 
@@ -337,7 +337,7 @@ As it can be seen in Figure \ref{subfig:pr_bright}
 
 \subsection{Online Performance}
 
-There exist limited number of techniques that operate in real-time without parallelization. The speed tests are done with a MacBook Pro 7,1 which specifications are Intel Core 2 Duo 2.4 GHz CPU. In this setting, the extraction of Quantized Local Zernike Moments of an image of size $256\times 192$ pixels takes approximately $10ms$. The NN classification is applied with simple brute-force searching in which the algorithmic complexity is $\mathcal{O}(mn)$ that depends on the number of frames to compare with. In other words, the amount of time needed to performs this search increases throughout the trajectory. Therefore, the total processing time including the brute force search is $14ms$ in average when approximately 2000 frames are processed.
+There exist limited number of techniques that operate in real-time without parallelization. The speed tests are done with a MacBook Pro 7.1 which specifications are Intel Core 2 Duo 2.4 GHz CPU. In this setting, the extraction of Quantized Local Zernike Moments of an image of size $256\times 192$ pixels takes approximately $10ms$. The NN classification is applied with simple brute-force searching in which the algorithmic complexity is $\mathcal{O}(mn)$ that depends on the number of frames to compare with. In other words, the amount of time needed to performs this search increases throughout the trajectory. Therefore, the total processing time including the brute force search is $14ms$ in average when approximately 2000 frames are processed.
 
 % DISTANCE MATRICES
 \begin{figure}[!htb]
@@ -371,7 +371,7 @@ There exist limited number of techniques that operate in real-time without paral
         \end{subfigure}
         
         \hspace{-3mm}
-        \caption{Distance matrixes}
+        \caption{Similarity matrices of the captured images in experimental results. Condensed fray shades point out to positive alikeness between scenes. The black lines in lower triangle indicates user specified ground truths. The gray lines in upper-triangle shows the obtained results.}
         \label{fig:dist_matrices}
 \end{figure}
 
