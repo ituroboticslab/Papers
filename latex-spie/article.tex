@@ -258,24 +258,8 @@ sgn(a_{00}^{PQ}) &sgn(b_{00}^{PQ}) & \hdots & sgn(a_{nm}^{PQ}) & sgn(b_{nm}^{PQ}
 
 Finally, the histogram is defined that consists of $2^{2K(n)-1}$ bins, and each bin is filled with the number of occurrences of the integers in $\mathbf{C}$. Therefore, the input image $I_{p\times q}$ is described with a histogram of length of $2^{2K(n)-1}$.
 
-%----------------------------------------------------------------------------------------------------
-% EXPERIMENTS
-%----------------------------------------------------------------------------------------------------
-
-\section{EXPERIMENTS}
-
-The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from each other. The tests are done with either using gray and depth images separately or using both of them. After that, the difference matrices are calculated to examine the results. Nearest Neighbour (NN) algorithm is applied to classify the new locations using the $L_{1}$ distance metric. In addition to this, the last 100 frames are not included in the classification phase, because it the sensor is always moving and these frames correspond to the area behind the sensor.
-
-The method described in Section \ref{sec:method} has basically two parameters that must be adjusted. One of them is $k\times k$ which defines the number of the subimages that the input image was partitioned to, and the other one is n, which is the order of the Zernike polynomials used. During the experiments, the selected parameters are $k = 30$ and $n = 2$. Then, the quantized $k\times k$-sized matrix obtained from the input image is divided into $5\times 5$ equal-sized non-overlapping subregions. The histograms of each subregion are simply concatenated to compose the feature vector of an image. In order to construct the ultimate feature vector containing both gray and depth images, each feature vector obtained from both images are also concatenated.
-
-\subsection{Datasets}
-
-In order to measure loop closing performance of the algorithm in different illumination levels, three different datasets are created in an indoor environment by using Kinect sensor which can grab both gray and depth images at the same time. The lighting conditions in the datasets are bright, dim and dark in which both depth and gray images are captured. The exemplary images belonging to different datasets are shown in Figure \ref{fig:dataset}. In some cases, the line of sight of the Kinect is not enough to capture the depth information for distances above $10m$. Thus, some of the depth images are unreliable.
-
-The images in the datasets are acquired via Kinect mounted moving platform and pointed in the direction of the displacement with approximate speed 0.25m/s. Also, the rectangle-shaped trajectory of the three datasets is almost the same as the others to compare their performances correctly. There are two loops that contain around 1000 frames per loop in each dataset, first one is used for discovering and the second for evaluating. To create the ground truth, the locations which corresponds to approximately 10 sequential frames are annotated manually. 
-
 % BENCHMARK DATASETS
-\begin{figure}[!htb]
+\begin{figure}
         \centering
         
         %%% BRIGHT 
@@ -311,63 +295,14 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
 \end{figure}
 
 %----------------------------------------------------------------------------------------------------
-% RESULTS
+% EXPERIMENTS
 %----------------------------------------------------------------------------------------------------
 
-\section{RESULTS}
-\label{sec:results}
+\section{EXPERIMENTS}
 
-The results are obtained by three datasets in which the trajectory of the Kinect mounted moving platform is similar to each Dataset that is created in different lightning conditions: Bright, Dim and Dark. In the first loop, there are no loop closures to detect. To examine the performance of the method, precision-recall (PR) curves are plotted for each dataset. The PR curves are illustrated in Figures \ref{subfig:pr_bright}, \ref{subfig:pr_dim}, \ref{subfig:pr_dark} in which there are compared three different image sources that are only grayscale images, only depth images and both. The results show that using both grayscale and depth images gives the best performance in bright and dim datasets. In addition to this, the similarity matrices calculated from each dataset is shown in \ref{fig:dist_matrices}. The black dots corresponds to the detected loop closures at $90\%$ precision. As it can be seen in the similarity matrices, the algorithm performs quite successful results to detect loop closure event.
+The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from each other. The tests are done with either using grayscale and depth images separately or using both of them. After that, the difference matrices are calculated to examine the results. Nearest Neighbour (NN) algorithm is applied to classify the new locations using the $L_{1}$ distance metric. In addition to this, the last 100 frames are not included in the classification phase, because it the sensor is always moving and these frames correspond to the area behind the sensor.
 
-
-%VANGELden
-%the performance shown in Table/figure is  representative as the results are obtained with a %manually annotated ….
-%our demo video provides qualitative loop closure results which may be considered to be more representative for our method’s performance
-
-
-\subsection{Online Performance}
-
-
-
-There exist limited number of techniques that operate in real-time without parallelization. The speed tests are done with a MacBook Pro 7.1 which specifications are Intel Core 2 Duo 2.4 GHz CPU. In this setting, the extraction of Quantized local Zernike moments of an image of size $256\times 192$ pixels takes approximately $10ms$. The NN classification is applied with simple brute-force searching in which the algorithmic complexity is $\mathcal{O}(mn)$ that depends on the number of frames to compare with. In other words, the amount of time needed to performs this search increases throughout the trajectory. Therefore, the total processing time including the brute force search is $14ms$ in average when approximately 2000 frames are processed.
-
-
-% DISTANCE MATRICES
-\begin{figure}
-        \centering
-        
-        %%% BRIGHT DISTANCE MATRIX
-        \begin{subfigure}[b]{0.27\textwidth}
-        \centering
-         % trim parameters by order: left, bottom, right, top
-        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_bright.png}    
-        \caption{Bright}
-        \label{subfig:dist_bright}
-        \end{subfigure}
-        ~ 
-        %%% DIM DISTANCE MATRIX
-        \begin{subfigure}[b]{0.27\textwidth}
-        \centering
-         % trim parameters by order: left, bottom, right, top
-        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_dim.png}    
-        \caption{Dim}
-        \label{subfig:dist_dim}
-        \end{subfigure}
-         ~ 
-        %%% DARK DISTANCE MATRIX
-        \begin{subfigure}[b]{0.27\textwidth}
-        \centering
-         % trim parameters by order: left, bottom, right, top
-        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_dark.png}    
-        \caption{Dark}
-        \label{subfig:dist_dark}
-        \end{subfigure}
-        
-        \hspace{-2mm}
-        \caption{Similarity matrices of the captured images in experimental results. Condensed gray shades point out to positive alikeness between scenes. The black dots in lower triangle indicates detected loop closures at $90\%$ precision.}
-        \label{fig:dist_matrices}
-\end{figure}
-
+The method described in Section \ref{sec:method} has basically two parameters that must be adjusted. One of them is $k\times k$ which defines the number of the subimages that the input image was partitioned to, and the other one is n, which is the order of the Zernike polynomials used. During the experiments, the selected parameters are $k = 30$ and $n = 2$. Then, the quantized $k\times k$-sized matrix obtained from the input image is divided into $5\times 5$ equal-sized non-overlapping subregions. The histograms of each subregion are simply concatenated to compose the feature vector of an image. In order to construct the ultimate feature vector containing both grayscale and depth images, each feature vector obtained from both images are also concatenated.
 
 % RESULTS
 \begin{figure}
@@ -413,6 +348,73 @@ There exist limited number of techniques that operate in real-time without paral
         \caption{The precision-recall curves of our method.}
         \label{fig:pr_curves}
 \end{figure}
+
+\subsection{Datasets}
+
+In order to measure loop closing performance of the algorithm in different illumination levels, three different datasets are created in an indoor environment by using Kinect sensor which can grab both grayscale and depth images at the same time. The lighting conditions in the datasets are bright, dim and dark in which both depth and grayscale images are captured. The exemplary images belonging to different datasets are shown in Figure \ref{fig:dataset}. In some cases, the line of sight of the Kinect is not enough to capture the depth information for distances above $10m$. Thus, some of the depth images are unreliable.
+
+The images in the datasets are acquired via Kinect mounted moving platform and pointed in the direction of the displacement with approximate speed 0.25m/s. Also, the rectangle-shaped trajectory of the three datasets is almost the same as the others to compare their performances correctly. There are two loops that contain around 1000 frames per loop in each dataset, first one is used for discovering and the second for evaluating. To create the ground truth, the locations which corresponds to approximately 10 sequential frames are annotated manually. 
+
+
+
+%----------------------------------------------------------------------------------------------------
+% RESULTS
+%----------------------------------------------------------------------------------------------------
+
+\section{RESULTS}
+\label{sec:results}
+
+The results are obtained by three datasets in which the trajectory of the Kinect mounted moving platform is similar to each Dataset that is created in different lightning conditions: Bright, Dim and Dark. In the first loop, there are no loop closures to detect. To examine the performance of the method, precision-recall (PR) curves are plotted for each dataset. The PR curves are illustrated in Figures \ref{subfig:pr_bright}, \ref{subfig:pr_dim}, \ref{subfig:pr_dark} in which there are compared three different image sources that are only grayscale images, only depth images and both. The results show that using both grayscale and depth images gives the best performance in bright and dim datasets. In addition to this, the similarity matrices calculated from each dataset is shown in \ref{fig:dist_matrices}. The black dots corresponds to the detected loop closures at $90\%$ precision. As it can be seen in the similarity matrices, the algorithm performs quite successful results to detect loop closure event.
+
+
+%VANGELden
+%the performance shown in Table/figure is  representative as the results are obtained with a %manually annotated ….
+%our demo video provides qualitative loop closure results which may be considered to be more representative for our method’s performance
+
+
+
+
+\subsection{Online Performance}
+
+There exist limited number of techniques that operate in real-time without parallelization. The speed tests are done with a MacBook Pro 7.1 which specifications are Intel Core 2 Duo 2.4 GHz CPU. In this setting, the extraction of Quantized local Zernike moments of an image of size $256\times 192$ pixels takes approximately $10ms$. The NN classification is applied with simple brute-force searching in which the algorithmic complexity is $\mathcal{O}(mn)$ that depends on the number of frames to compare with. In other words, the amount of time needed to performs this search increases throughout the trajectory. Therefore, the total processing time including the brute force search is $14ms$ in average when approximately 2000 frames are processed.
+
+
+% DISTANCE MATRICES
+\begin{figure}
+        \centering
+        
+        %%% BRIGHT DISTANCE MATRIX
+        \begin{subfigure}[b]{0.27\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_bright.png}    
+        \caption{Bright}
+        \label{subfig:dist_bright}
+        \end{subfigure}
+        ~ 
+        %%% DIM DISTANCE MATRIX
+        \begin{subfigure}[b]{0.27\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_dim.png}    
+        \caption{Dim}
+        \label{subfig:dist_dim}
+        \end{subfigure}
+         ~ 
+        %%% DARK DISTANCE MATRIX
+        \begin{subfigure}[b]{0.27\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_dark.png}    
+        \caption{Dark}
+        \label{subfig:dist_dark}
+        \end{subfigure}
+        
+        \hspace{-2mm}
+        \caption{Similarity matrices of the captured images in experimental results. Condensed gray shades point out to positive alikeness between scenes. The black dots in lower triangle indicates detected loop closures at $90\%$ precision.}
+        \label{fig:dist_matrices}
+\end{figure}
+
 
 
 
