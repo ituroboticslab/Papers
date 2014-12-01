@@ -334,13 +334,8 @@ The results are obtained by three datasets in which the trajectory of the Kinect
 
 As it can be seen in Figure \ref{subfig:pr_bright}
 
-
-\subsection{Online Performance}
-
-There exist limited number of techniques that operate in real-time without parallelization. The speed tests are done with a MacBook Pro 7.1 which specifications are Intel Core 2 Duo 2.4 GHz CPU. In this setting, the extraction of Quantized Local Zernike Moments of an image of size $256\times 192$ pixels takes approximately $10ms$. The NN classification is applied with simple brute-force searching in which the algorithmic complexity is $\mathcal{O}(mn)$ that depends on the number of frames to compare with. In other words, the amount of time needed to performs this search increases throughout the trajectory. Therefore, the total processing time including the brute force search is $14ms$ in average when approximately 2000 frames are processed.
-
 % DISTANCE MATRICES
-\begin{figure}[!htb]
+\begin{figure}
         \centering
         
         %%% BRIGHT DISTANCE MATRIX
@@ -375,8 +370,12 @@ There exist limited number of techniques that operate in real-time without paral
         \label{fig:dist_matrices}
 \end{figure}
 
+\subsection{Online Performance}
+
+There exist limited number of techniques that operate in real-time without parallelization. The speed tests are done with a MacBook Pro 7.1 which specifications are Intel Core 2 Duo 2.4 GHz CPU. In this setting, the extraction of Quantized Local Zernike Moments of an image of size $256\times 192$ pixels takes approximately $10ms$. The NN classification is applied with simple brute-force searching in which the algorithmic complexity is $\mathcal{O}(mn)$ that depends on the number of frames to compare with. In other words, the amount of time needed to performs this search increases throughout the trajectory. Therefore, the total processing time including the brute force search is $14ms$ in average when approximately 2000 frames are processed.
+
 % RESULTS
-\begin{figure}[!htb]
+\begin{figure}
         \centering
         
         %%% BRIGHT PR CURVE
@@ -384,7 +383,7 @@ There exist limited number of techniques that operate in real-time without paral
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_bright.eps}    
-        \caption{Bright dataset results.}
+        \caption{Bright}
         \label{subfig:pr_bright}
         \end{subfigure}
         ~ 
@@ -393,7 +392,7 @@ There exist limited number of techniques that operate in real-time without paral
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_dim.eps}    
-        \caption{Dim dataset results.}
+        \caption{Dim}
         \label{subfig:pr_dim}
         \end{subfigure}
         ~
@@ -402,7 +401,7 @@ There exist limited number of techniques that operate in real-time without paral
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_dark.eps}    
-        \caption{Dark dataset results.}
+        \caption{Dark}
         \label{subfig:pr_dark}
         \end{subfigure}
         ~ 
@@ -411,12 +410,12 @@ There exist limited number of techniques that operate in real-time without paral
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_all.eps}    
-        \caption{Comparison between datasets.}
+        \caption{Comparison between datasets when both grayscale and depth images are utilized.}
         \label{subfig:pr_all}
         \end{subfigure}
 
         \hspace{-3mm}
-        \caption{PR curves}
+        \caption{Precision vs. Recall curves of the results.}
         \label{fig:pr_curves}
 \end{figure}
 
@@ -428,7 +427,7 @@ There exist limited number of techniques that operate in real-time without paral
 
 \section{CONCLUSION}
 
-This paper presents a novel image description technique that is used to achieve loop closure detection within a SLAM framework. The technique works quite rapidly and operates in real-time. Moreover, it results successful loop closing on different lightning conditions by using the depth information.
+In conclusion, this paper presents a novel image description technique that is used to achieve loop closure detection within a SLAM framework. The technique works quite rapidly and operates in real-time. Moreover, it results successful loop closing on different lightning conditions by using the depth information.
 
 %----------------------------------------------------------------------------------------------------
 % ACKNOWLEDGEMENTS
