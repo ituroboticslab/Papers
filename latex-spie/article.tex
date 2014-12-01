@@ -268,7 +268,7 @@ The method implemented in this paper has been evaluated on three datasets which 
 
 The method described in Section \ref{sec:method} has basically two parameters that must be adjusted. One of them is $k\times k$ which defines the number of the subimages that the input image was partitioned to, and the other one is n, which is the order of the Zernike polynomials used. During the experiments, the selected parameters are $k = 30$ and $n = 2$. Then, the quantized $k\times k$-sized matrix obtained from the input image is divided into $5\times 5$ equal-sized non-overlapping subregions. The histograms of each subregion are simply concatenated to compose the feature vector of an image. In order to construct the ultimate feature vector containing both gray and depth images, each feature vector obtained from both images are also concatenated.
 
-\subsection{Benchmark Datasets}
+\subsection{Benchmark of the Datasets}
 
 In order to measure loop closing performance of the algorithm in different illumination levels, three different datasets are created in an indoor environment by using Kinect sensor which can grab both gray and depth images at the same time. The lighting conditions in the datasets are bright, dim and dark in which both depth and gray images are captured. The exemplary images belonging to different datasets are shown in Figure \ref{fig:dataset}. In some cases, the line of sight of the Kinect is not enough to capture the depth information for distances above $10m$. Thus, some of the depth images are unreliable.
 
