@@ -90,13 +90,13 @@ In this paper, we present an enhanced loop closure method\footnote{Readers can a
 
 In mobile robotics, autonomous navigation is an active research area especially for the indoor environments, where the global position information is missing and the localization information is highly dependent on odometry sensors. One of the major problems linked to robotic navigation is SLAM which still remains as an assertive problem in a lot of ways. Loop closing is defined as the correct identification of previously visited location in terms of SLAM. Information that is gathered from various data sources including LIDARs, RADARs, stereo and monocular cameras\cite{williams08iros, 5650234} is highly utilized in loop closure detection. With the recent development of visual sensor technologies, the loop closure detection became a problem that is open for research in the field of computer vision.
 
-Visual loop closing techniques can be categorized into three main parts\cite{Williams09}: Image-to-image and image-to-map, map-to-map techniques. Loop closure estimations\cite{sariyanidi_spie13}  are cast by matching images. Most of image-to-image techniques that rely on salient image patches, use small, low-level features such as SURF\cite{springerlink:10.1007/11744023_32} extracted from the whole image \cite{sariyanidi_iv, HoNewmanCIRA2005, CumminsNewmanIJRR08}. One of the widely used methods in visual place recognition problem is the Bag of Words\cite{1238663} method. Also, there are some studies that uses additional depth information\cite{kerl2013-IROS} in loop closure problems.More information related to visual loop closing approaches can be found on the relevant survey \cite{Williams09}.
+Visual loop closing techniques can be categorized into three main parts\cite{Williams09}: Image-to-image and image-to-map, map-to-map techniques. Loop closure estimations\cite{sariyanidi_spie13}  are cast by matching images. Most of image-to-image techniques that rely on salient image patches, use small, low-level features such as SURF\cite{springerlink:10.1007/11744023_32} extracted from the whole image \cite{sariyanidi_iv, HoNewmanCIRA2005, CumminsNewmanIJRR08}. One of the widely used methods in visual place recognition problem is the Bag of Words\cite{1238663} method. Also, there are some studies that uses additional depth information\cite{kerl2013-IROS} in loop closure problems. More information related to visual loop closing approaches can be found on the relevant survey \cite{Williams09}.
 
 In this paper, we present an enhanced loop closure method based on image-to-image matching with the additional depth information in indoor environments. Specifically, we adopt visual place recognition without using any metrical information such as rotation and exact location to correctly identify the previously visited location. This technique is quite simple because of its low computational complexity, and performs in real-time with high loop closing accuracy. 
 
-The technique we implement relies on discrete Complex Zernike Moments (CZMs) in 2-dimensional space. They are extracted using a set of complex polynomials which form a complete orthogonal radial basis functions defined on the unit disc. These moments are used to represent shape information inside the image within the context of image processing. To make the image description more robust, the CZMs of the input image is calculated in local manner. In this study, the CZMs are extracted from both the greyscale and depth images separately and concatenated sequentially to create ultimate feature vector.
+The technique we implement relies on discrete complex Zernike moments (CZMs) in 2-dimensional space. They are extracted using a set of complex polynomials which form a complete orthogonal radial basis functions defined on the unit disc. These moments are used to represent shape information inside the image within the context of image processing. To make the image description more robust, the CZMs of the input image is calculated in local manner. In this study, the CZMs are extracted from both the greyscale and depth images separately and concatenated sequentially to create ultimate feature vector.
 
-The locations are represented with the histograms of their images. Detecting loop closing events can be considered as a machine learning problem which number of classes expands continuously when a new unseen location comes. We utilized Nearest Neighbour (NN) algorithm to classify locations by which the distance metric is the regular $L_1$ a.k.a. Manhattan distance that is one of the simplest distance metric available. In other words, the image which distance between the input image is minimum closes the loop, if the distance is lower than the predefined threshold value. 
+The locations are represented with the histograms of their images. Detecting loop closing events can be considered as a machine learning problem which number of classes expands continuously when a new unseen location comes. We utilized nearest neighbour algorithm to classify locations by which the distance metric is the regular $L_1$ a.k.a. Manhattan distance that is one of the simplest distance metric available. In other words, the image which distance between the input image is minimum closes the loop, if the distance is lower than the predefined threshold value. 
 
 In the following sections, a brief introduction about the methodology is explained first, and then the experiments and datasets are shown, and finally results are presented. 
 
@@ -300,7 +300,7 @@ Finally, the histogram is defined that consists of $2^{2K(n)-1}$ bins, and each 
 
 \section{EXPERIMENTS}
 
-The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from each other. The tests are done with either using gray and depth images separately or using both of them. After that, the difference matrices are calculated to examine the results. The NN algorithm is applied to classify the new locations using the $L_{1}$ distance metric. In addition to this, the last 100 frames are not included in the classification phase, because it the sensor is always moving and these frames correspond to the area behind the sensor.
+The method implemented in this paper has been evaluated on three datasets which lighting conditions are different from each other. The tests are done with either using grayscale and depth images separately or using both of them. After that, the difference matrices are calculated to examine the results. The NN algorithm is applied to classify the new locations using the $L_{1}$ distance metric. In addition to this, the last 100 frames are not included in the classification phase, because it the sensor is always moving and these frames correspond to the area behind the sensor.
 
 The method described in Section \ref{sec:method} has basically two parameters that must be adjusted. One of them is $k\times k$ which defines the number of the subimages that the input image was partitioned to, and the other one is n, which is the order of the Zernike polynomials used. During the experiments, the selected parameters are $k = 30$ and $n = 2$. Then, the quantized $k\times k$-sized matrix obtained from the input image is divided into $5\times 5$ equal-sized non-overlapping subregions. The histograms of each subregion are simply concatenated to compose the feature vector of an image. In order to construct the ultimate feature vector containing both grayscale and depth images, each feature vector obtained from both images are also concatenated.
 
@@ -309,7 +309,7 @@ The method described in Section \ref{sec:method} has basically two parameters th
         \centering
         
         %%% BRIGHT PR CURVE
-        \begin{subfigure}[b]{0.48\textwidth}
+        \begin{subfigure}[b]{0.43\textwidth}
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_bright.eps}    
@@ -318,7 +318,7 @@ The method described in Section \ref{sec:method} has basically two parameters th
         \end{subfigure}
         ~ 
         %%% DIM PR CURVE
-        \begin{subfigure}[b]{0.48\textwidth}
+        \begin{subfigure}[b]{0.43\textwidth}
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_dim.eps}    
@@ -327,7 +327,7 @@ The method described in Section \ref{sec:method} has basically two parameters th
         \end{subfigure}
         ~
         %%% DARK PR CURVE
-        \begin{subfigure}[b]{0.48\textwidth}
+        \begin{subfigure}[b]{0.43\textwidth}
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_dark.eps}    
@@ -336,7 +336,7 @@ The method described in Section \ref{sec:method} has basically two parameters th
         \end{subfigure}
         ~ 
         %%% ALL PR CURVE
-        \begin{subfigure}[b]{0.48\textwidth}
+        \begin{subfigure}[b]{0.43\textwidth}
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 5mm 0mm, clip, width=\textwidth]{figures/pr_all.eps}    
@@ -355,8 +355,6 @@ In order to measure loop closing performance of the algorithm in different illum
 
 The images in the datasets are acquired via Kinect mounted moving platform and pointed in the direction of the displacement with approximate speed 0.25m/s. Also, the rectangle-shaped trajectory of the three datasets is almost the same as the others to compare their performances correctly. There are two loops that contain around 1000 frames per loop in each dataset, first one is used for discovering and the second for evaluating. To create the ground truth, the locations which corresponds to approximately 10 sequential frames are annotated manually. 
 
-
-
 %----------------------------------------------------------------------------------------------------
 % RESULTS
 %----------------------------------------------------------------------------------------------------
@@ -364,12 +362,8 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
 \section{RESULTS}
 \label{sec:results}
 
-The results are obtained by three datasets for which the trajectory is similar. Each dataset that is created in different lightning conditions: Bright, Dim and Dark. In the first loop, there are no loop closures to detect. To examine the performance of the method, precision-recall (PR) curves are plotted for each dataset. The PR curves are illustrated in Figures \ref{subfig:pr_bright}, \ref{subfig:pr_dim}, \ref{subfig:pr_dark} in which there are compared three different image sources that are only grayscale images, only depth images and both. The results show that using both grayscale and depth images gives the best performance in bright and dim datasets. In addition to this, the similarity matrices calculated from each dataset is shown in Figure \ref{fig:dist_matrices}. The black dots corresponds to the detected loop closures at $90\%$ precision. As it can be seen in the similarity matrices, the algorithm performs quite successful results to detect loop closure event.
-
-
-%VANGELden
-%the performance shown in Table/figure is  representative as the results are obtained with a %manually annotated ….
-%our demo video provides qualitative loop closure results which may be considered to be more representative for our method’s performance
+The results are obtained from three datasets for which the trajectory of the testing platform was the same. Each dataset is gathered in different lighting conditions: bright, dim and dark.
+To examine the performance of the method, precision-recall (PR) curves are plotted for each dataset. The figures \ref{subfig:pr_bright}, \ref{subfig:pr_dim}, \ref{subfig:pr_dark} consist of PR curves belonging to test runs in which only grayscale images are present, only depth-images are present or both grayscale and depth images are present. In Figure \ref{subfig:pr_all}, using the test run done with both grayscale and depth images, a comparison plot is shown, consisting of three PR curves belonging to bright, dim and dark datasets. The results show that using both grayscale and depth images gives the best performance in bright and dim datasets. In addition to this, the similarity matrices calculated from each dataset is shown in Figure\ref{fig:dist_matrices}. The black dots corresponds to the detected loop closures at $90\%$ precision. As it can be seen in the similarity matrices, the algorithm accomplishes to detect loop closure events.
 
 
 \subsection{Online Performance}
@@ -382,7 +376,7 @@ There exist limited number of techniques that operate in real-time without paral
         \centering
         
         %%% BRIGHT DISTANCE MATRIX
-        \begin{subfigure}[b]{0.27\textwidth}
+        \begin{subfigure}[b]{0.30\textwidth}
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_bright.png}    
@@ -391,7 +385,7 @@ There exist limited number of techniques that operate in real-time without paral
         \end{subfigure}
         ~ 
         %%% DIM DISTANCE MATRIX
-        \begin{subfigure}[b]{0.27\textwidth}
+        \begin{subfigure}[b]{0.30\textwidth}
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_dim.png}    
@@ -400,7 +394,7 @@ There exist limited number of techniques that operate in real-time without paral
         \end{subfigure}
          ~ 
         %%% DARK DISTANCE MATRIX
-        \begin{subfigure}[b]{0.27\textwidth}
+        \begin{subfigure}[b]{0.30\textwidth}
         \centering
          % trim parameters by order: left, bottom, right, top
         \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/dist_dark.png}    
