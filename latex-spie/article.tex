@@ -12,9 +12,9 @@
 %----------------------------------------------------------------------------------------------------
 
 \documentclass[]{spie}  % use for US letter paper
+%\documentclass[a4paper]{spie}  %>>> use this instead for A4 paper
+%\documentclass[nocompress]{spie}  %>>> to avoid compression of citations
 \usepackage{comment}
-%%\documentclass[a4paper]{spie}  %>>> use this instead for A4 paper
-%%\documentclass[nocompress]{spie}  %>>> to avoid compression of citations
 \usepackage[]{graphicx}
 \usepackage{epsfig}		% TeX will automatically convert eps --> pdf in pdflatex	
 \usepackage{epstopdf}
@@ -90,7 +90,7 @@ In this paper, we present an enhanced loop closure method\footnote{Readers can a
 
 In mobile robotics, autonomous navigation is an active research area especially for the indoor environments, where the global position information is missing and the localization information is highly dependent on odometry sensors. One of the major problems linked to robotic navigation is SLAM which still remains as an assertive problem in a lot of ways. Loop closing is defined as the correct identification of previously visited location in terms of SLAM. Information that is gathered from various data sources including LIDARs, RADARs, stereo and monocular cameras\cite{williams08iros, 5650234} is highly utilized in loop closure detection. With the recent development of visual sensor technologies, the loop closure detection became a problem that is open for research in the field of computer vision.
 
-Visual loop closing techniques can be categorized into three main parts\cite{Williams09}: Image-to-image and image-to-map, map-to-map techniques. Loop closure estimations\cite{sariyanidi_spie13}  are cast by matching images. Most of image-to-image techniques that rely on salient image patches, use small, low-level features such as SURF\cite{springerlink:10.1007/11744023_32} extracted from the whole image \cite{sariyanidi_iv, HoNewmanCIRA2005, CumminsNewmanIJRR08}. One of the widely used methods in visual place recognition problem is the Bag of Words\cite{1238663} method. Also, there are some studies that uses additional depth information\cite{kerl2013-IROS} in loop closure problems. More information related to visual loop closing approaches can be found on the relevant survey \cite{Williams09}.
+Visual loop closing techniques can be categorized into three main parts\cite{Williams09}: Image-to-image and image-to-map, map-to-map techniques. Loop closure estimations\cite{sariyanidi_spie13}  are cast by matching images. Most of image-to-image techniques that rely on salient image patches, use small, low-level features such as SURF\cite{Bay06surf:speeded} extracted from the whole image \cite{sariyanidi_iv, HoNewmanCIRA2005, CumminsNewmanIJRR08}. One of the widely used methods in visual place recognition problem is the Bag of Words\cite{Csurka04visualcategorization} method. Also, there are some studies that uses additional depth information\cite{kerl2013-IROS} in loop closure problems. More information related to visual loop closing approaches can be found on the relevant survey \cite{Williams09}.
 
 In this paper, we present an enhanced loop closure method based on image-to-image matching with the additional depth information in indoor environments. Specifically, we adopt visual place recognition without using any metrical information such as rotation and exact location to correctly identify the previously visited location. This technique is quite simple because of its low computational complexity, and performs in real-time with high loop closing accuracy. 
 
