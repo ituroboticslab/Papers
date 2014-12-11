@@ -228,7 +228,7 @@ sgn(a_{00}^{PQ}) & sgn(b_{00}^{PQ}) & \hdots & sgn(a_{nm}^{PQ}) & sgn(b_{nm}^{PQ
 \end{equation}
 where $sgn(\bullet)$ is the signum function. According to (\ref{eq:global_zernike}), $Z_{nm}$ with $m = 0$ is omitted since their imaginary components turn out to be constantly equal to zero. 
 
-The next step is representing the binary matrix shown in (\ref{eq:lzm_binary}) with histograms. Using the binary values for the overall image representation is not a practical solution. Describing binary data with histograms are more common solution to obtain the image representation. As the methodology described so far, $k^2\times 2K(n)$-sized binary matrix is extracted. Each row of this matrix is linearly combined by weighting each of them as a power of $2$. Hence a column vector $\mathbf{C}$ is obtained with integer values ranging between $0$ and $2^{2K(n)-1}-1$:
+The next step is representing the binary matrix shown in (\ref{eq:lzm_binary}) with histograms. Using the binary values for the overall image representation is not a practical solution. Describing binary data with histograms are more common solution to obtain the image representation. As the methodology described so far, $k^2\times 2K(n)$-sized binary matrix is extracted. Each row of this matrix is linearly combined by weighting each of them as a power of $2$. Hence a column vector $\mathbf{C}$ is obtained with integer values ranging between $0$ and $2^{2K(n)}-1$:
 
 \begin{equation}
 \mathbf{C} = 
@@ -256,7 +256,7 @@ sgn(a_{00}^{PQ}) &sgn(b_{00}^{PQ}) & \hdots & sgn(a_{nm}^{PQ}) & sgn(b_{nm}^{PQ}
  \label{eq:lzm_coded}
 \end{equation}
 
-Finally, the histogram is defined that consists of $2^{2K(n)-1}$ bins, and each bin is filled with the number of occurrences of the integers in $\mathbf{C}$. Therefore, the input image $I_{p\times q}$ is described with a histogram of length of $2^{2K(n)-1}$.
+Finally, the histogram is defined that consists of $2^{2K(n)}$ bins, and each bin is filled with the number of occurrences of the integers in $\mathbf{C}$. Therefore, the input image $I_{p\times q}$ is described with a histogram of length of $2^{2K(n)}$.
 
 % BENCHMARK DATASETS
 \begin{figure}
@@ -345,7 +345,7 @@ The method described in Section \ref{sec:method} has basically two parameters th
         \end{subfigure}
 
         \hspace{-3mm}
-        \caption{The precision-recall curves of our method.}
+        \caption{The precision-recall curves of the method.}
         \label{fig:pr_curves}
 \end{figure}
 
@@ -363,7 +363,7 @@ The images in the datasets are acquired via Kinect mounted moving platform and p
 \label{sec:results}
 
 The results are obtained from three datasets for which the trajectory of the testing platform was the same. Each dataset is gathered in different lighting conditions: bright, dim and dark.
-To examine the performance of the method, precision-recall (PR) curves are plotted for each dataset. The figures \ref{subfig:pr_bright}, \ref{subfig:pr_dim}, \ref{subfig:pr_dark} consist of PR curves belonging to test runs in which only grayscale images are present, only depth-images are present or both grayscale and depth images are present. In Figure \ref{subfig:pr_all}, using the test run done with both grayscale and depth images, a comparison plot is shown, consisting of three PR curves belonging to bright, dim and dark datasets. The results show that using both grayscale and depth images gives the best performance in bright and dim datasets. In addition to this, the similarity matrices calculated from each dataset is shown in Figure\ref{fig:dist_matrices}. The black dots corresponds to the detected loop closures at $90\%$ precision. As it can be seen in the similarity matrices, the algorithm accomplishes to detect loop closure events.
+To examine the performance of the method, precision-recall (PR) curves are plotted for each dataset. The Figures \ref{subfig:pr_bright}, \ref{subfig:pr_dim}, \ref{subfig:pr_dark} consist of PR curves belonging to test runs in which only grayscale images are present, only depth-images are present or both grayscale and depth images are present. In Figure \ref{subfig:pr_all}, using the test run done with both grayscale and depth images, a comparison plot is shown, consisting of three PR curves belonging to bright, dim and dark datasets. The results show that using both grayscale and depth images gives the best performance in bright and dim datasets. In addition to this, the similarity matrices calculated from each dataset is shown in Figure \ref{fig:dist_matrices}. The black dots corresponds to the detected loop closures at $90\%$ precision. As it can be seen in the similarity matrices, the algorithm accomplishes to detect loop closure events. In addition to this, the real-time performance of the method can be observed in the videos which screen shots are shown in Figures \ref{subfig:video_bright}, \ref{subfig:video_dim} and \ref{subfig:video_dark}.
 
 
 \subsection{Online Performance}
@@ -423,6 +423,49 @@ In conclusion, this paper presents a novel image description technique that is u
 \acknowledgments         
 
 Authors would like to thank for the collaboration and the equipments to ITU Robotics Laboratory, and Borda Technology for the help with indoor dataset retrieval.
+
+% VIDEO SCREEN SHOTS
+\begin{figure}
+        \centering
+        
+        % http://dx.doi.org/doi.number.goes.here
+        % \footnote{http://dx.doi.org/doi.number.goes.here}
+        
+        %%% BRIGHT
+        \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/video_bright.png}    
+        \caption{Video 1: Bright\vspace{1mm}\\\scriptsize{http://dx.doi.org/doi.number.goes.here}}
+        %%% ATTENTION !!! 
+        %%% IF THE LINKS ARE OVERLAPPED, USE \scriptsize INSTEAD OF \footnotesize
+        \label{subfig:video_bright}
+        \end{subfigure}
+        ~ 
+        %%% DIM 
+        \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/video_dim.png}    
+        \caption{Video 2: Dim\vspace{1mm}\\\scriptsize{http://dx.doi.org/doi.number.goes.here}}
+        \label{subfig:video_dim}
+        \end{subfigure}
+         ~ 
+        %%% DARK 
+        \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+         % trim parameters by order: left, bottom, right, top
+        \includegraphics[trim = 0mm 0mm 0mm 0mm, clip, width=\textwidth]{figures/video_dark.png}    
+        \caption{Video 3: Dark\vspace{1mm}\\\scriptsize{http://dx.doi.org/doi.number.goes.here}}
+        \label{subfig:video_dark}
+        \end{subfigure}
+        
+        \hspace{-2mm}
+        \caption{Exemplar video screen shots of the video showing the real-time performance of the method. The images on the left side indicates the current grayscale and depth images with their frame index. On the right side, images correspond to previously visited location are screened. True positives (TP), false positives (FP), false negatives (FN) and true negatives (TN) counted from the beginning are reported under the images. Also, the number of loop closures and processing time of the current frame are shown at the bottom.}
+        \label{fig:videos}
+\end{figure}
+
+
 
 %----------------------------------------------------------------------------------------------------
 % REFERENCES
